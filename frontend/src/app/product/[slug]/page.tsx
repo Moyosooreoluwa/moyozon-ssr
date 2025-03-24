@@ -75,7 +75,7 @@ export default async function ProductPage({
                   reviewCount={product.reviewCount}
                 />
               </ListGroupItem>
-              <ListGroupItem>Price : ${product.price.toFixed(2)}</ListGroupItem>
+              <ListGroupItem>Brand : {product.brand}</ListGroupItem>
               <ListGroupItem>
                 <p>{product.description}</p>
               </ListGroupItem>
@@ -88,7 +88,7 @@ export default async function ProductPage({
                   <ListGroupItem>
                     <Row>
                       <Col>Price:</Col>
-                      <Col>${product.price}</Col>
+                      <Col>${product.price.toFixed(2)}</Col>
                     </Row>
                   </ListGroupItem>
                   <ListGroupItem>
