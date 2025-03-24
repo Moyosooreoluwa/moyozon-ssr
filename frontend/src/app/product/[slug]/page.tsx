@@ -1,4 +1,7 @@
+import LoadingSpinner from '@/components/LoadingSpinner';
+import MessageBox from '@/components/MessageBox';
 import Rating from '@/components/Rating';
+import { getError } from '@/utils/errorHandler';
 import axios from 'axios';
 import Image from 'next/image';
 import { CardBody, ListGroupItem } from 'react-bootstrap';
@@ -31,7 +34,11 @@ export default async function ProductPage({
   const { slug } = params;
 
   if (!slug) {
-    return <div>Loading...</div>;
+    return (
+      <Container className="mt-5">
+        <LoadingSpinner />
+      </Container>
+    );
   }
 
   try {
@@ -39,7 +46,11 @@ export default async function ProductPage({
       `http://localhost:5000/api/products/slug/${slug}`
     );
     if (!product) {
-      return <div>Loading...</div>;
+      return (
+        <Container className="mt-5">
+          <LoadingSpinner />
+        </Container>
+      );
     }
     return (
       <Container className="mt-4">
@@ -108,7 +119,11 @@ export default async function ProductPage({
       </Container>
     );
   } catch (error) {
-    console.error('Error fetching product:', error);
-    return <div>Error loading product</div>;
+    console.log(`Error fetching product: ${getError(error)}`);
+    return (
+      <Container className="mt-5">
+        <MessageBox variant="danger">{getError(error)}</MessageBox>
+      </Container>
+    );
   }
 }
