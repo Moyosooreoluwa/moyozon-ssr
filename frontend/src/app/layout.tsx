@@ -21,8 +21,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // const [sidebarOpen, setSidebarOpen] = useState(false);
-
   return (
     <html lang="en">
       <body className={`${montserrat.variable}  bg-gray-100  min-h-screen`}>
