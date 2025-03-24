@@ -69,7 +69,7 @@ const data = {
       rating: 4.9,
       reviewCount: 17,
       description:
-        'Put PC-like power in your pocket, Galaxy Z Fold6. More powerful than ever with its super-slim, productive screen.3 Now super-charged with Galaxy AI on foldables.',
+        'Put PC-like power in your pocket, Galaxy Z Fold6. More powerful than ever with its super-slim, productive screen. Now super-charged with Galaxy AI on foldables.',
     },
     {
       // _id: '5',

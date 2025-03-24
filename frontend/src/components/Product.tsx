@@ -1,6 +1,6 @@
 import Image from 'next/image';
-import React from 'react';
-import { Button, Card, CardBody } from 'react-bootstrap';
+import Link from 'next/link';
+import { Button, Card } from 'react-bootstrap';
 import Rating from './Rating';
 
 type ProductProps = {
@@ -12,46 +12,50 @@ type ProductProps = {
     price: number;
     rating: number;
     reviewCount: number;
+    stockCount: number;
   };
 };
 
 const Product = ({ product }: ProductProps) => {
   return (
-    <>
-      <Card
-        style={{ height: '500px', display: 'flex', flexDirection: 'column' }}
-      >
-        {/* <Link to={`/product/${product.slug}`}> */}
-        <Image
-          src={product.image}
-          alt={product.name}
-          width={679}
-          height={829}
-          style={{ objectFit: 'cover', height: '250px' }} // control image height
-        />
-        {/* </Link> */}
-        <CardBody>
-          {/* <Link to={`/product/${product.slug}`}> */}
+    <Card style={{ height: '450px', display: 'flex', flexDirection: 'column' }}>
+      <Link href={`/product/${product.slug}`} passHref>
+        <div style={{ position: 'relative', width: '100%', height: '250px' }}>
+          <Image
+            src={product.image}
+            alt={product.name}
+            fill
+            style={{ objectFit: 'cover' }}
+          />
+        </div>
+      </Link>
+
+      <Card.Body className="">
+        {/* <Card.Body className="d-flex flex-column"> */}
+        <Link
+          href={`/product/${product.slug}`}
+          passHref
+          className="no-underline no-decoration"
+        >
           <Card.Title
             style={{
-              minHeight: '48px', // Enough for 2 lines of text
+              minHeight: '48px',
               maxHeight: '48px',
               overflow: 'hidden',
               textOverflow: 'ellipsis',
               display: '-webkit-box',
-              WebkitLineClamp: 2, // Limit to 2 lines
+              WebkitLineClamp: 2,
               WebkitBoxOrient: 'vertical',
             }}
           >
             {product.name}
           </Card.Title>
-          {/* </Link> */}
-          <Rating rating={product.rating} reviewCount={product.reviewCount} />
-          <Card.Text className="mt-auto">${product.price}</Card.Text>
-          <Button>Add to cart</Button>
-        </CardBody>
-      </Card>
-    </>
+        </Link>
+        <Rating rating={product.rating} reviewCount={product.reviewCount} />
+        <Card.Text className="">${product.price.toFixed(2)}</Card.Text>
+        <Button>Add to cart</Button>
+      </Card.Body>
+    </Card>
   );
 };
 
