@@ -1,4 +1,5 @@
 'use client';
+import Product from '@/components/Product';
 import axios from 'axios';
 import { useEffect, useReducer } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
@@ -41,8 +42,8 @@ export default function Home() {
     <>
       <Container className="my-2">
         <div>
-          <h1>Featured Products</h1>
-          <div className="products">
+          <h1 className="my-2">Featured Products</h1>
+          <div className="flex flex-wrap justify-center my-2">
             {loading ? (
               <div>Loading...</div>
             ) : error ? (
@@ -51,8 +52,7 @@ export default function Home() {
               <Row>
                 {products.map((product) => (
                   <Col key={product.slug} sm={6} md={4} lg={3} className="mb-3">
-                    {/* <Product product={product}></Product> */}
-                    <p>{product.name}</p>
+                    <Product product={product} />
                   </Col>
                 ))}
               </Row>
