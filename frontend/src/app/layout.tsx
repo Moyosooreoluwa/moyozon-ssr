@@ -26,6 +26,7 @@ export default function RootLayout({
       <body className={`${montserrat.variable}  bg-gray-100  min-h-screen`}>
         <NavigationBar />
         {children}
+        <footer className="text-center">Moyo 2025</footer>
       </body>
     </html>
   );

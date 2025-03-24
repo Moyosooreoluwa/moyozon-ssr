@@ -1,5 +1,7 @@
+'use client';
+
 import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Button,
   Container,
@@ -12,9 +14,9 @@ import {
 } from 'react-bootstrap';
 import { GiHamburgerMenu } from 'react-icons/gi';
 
-type Props = {};
+const NavigationBar = () => {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
-const NavigationBar = (props: Props) => {
   return (
     <>
       <header>
@@ -22,9 +24,8 @@ const NavigationBar = (props: Props) => {
           <Container>
             <Button
               variant="light"
-              // onClick={() => setSidebarOpen(!sidebarOpen)}
+              onClick={() => setSidebarOpen(!sidebarOpen)}
             >
-              {/* <i className="fas fa-bars"></i> */}
               <GiHamburgerMenu />
             </Button>
             <NavbarBrand className="mx-4">
