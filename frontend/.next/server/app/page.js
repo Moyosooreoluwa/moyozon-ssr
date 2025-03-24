@@ -43,13 +43,13 @@ eval("Promise.resolve(/*! import() eager */).then(__webpack_require__.bind(__web
 
 /***/ }),
 
-/***/ "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-client-entry-loader.js?server=true!":
-/*!******************************************************************************************************!*\
-  !*** ./node_modules/next/dist/build/webpack/loaders/next-flight-client-entry-loader.js?server=true! ***!
-  \******************************************************************************************************/
-/***/ (() => {
+/***/ "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-client-entry-loader.js?modules=%7B%22request%22%3A%22%2FUsers%2Fmoyosooreoluwa%2FDocuments%2FCODING%20PROJECTS%2FWEBDEV%2Fmoyozon-ssr%2Ffrontend%2Fsrc%2Fapp%2Fpage.tsx%22%2C%22ids%22%3A%5B%5D%7D&server=true!":
+/*!**********************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/next/dist/build/webpack/loaders/next-flight-client-entry-loader.js?modules=%7B%22request%22%3A%22%2FUsers%2Fmoyosooreoluwa%2FDocuments%2FCODING%20PROJECTS%2FWEBDEV%2Fmoyozon-ssr%2Ffrontend%2Fsrc%2Fapp%2Fpage.tsx%22%2C%22ids%22%3A%5B%5D%7D&server=true! ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-
+eval("Promise.resolve(/*! import() eager */).then(__webpack_require__.bind(__webpack_require__, /*! ./src/app/page.tsx */ \"(rsc)/./src/app/page.tsx\"));\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKHJzYykvLi9ub2RlX21vZHVsZXMvbmV4dC9kaXN0L2J1aWxkL3dlYnBhY2svbG9hZGVycy9uZXh0LWZsaWdodC1jbGllbnQtZW50cnktbG9hZGVyLmpzP21vZHVsZXM9JTdCJTIycmVxdWVzdCUyMiUzQSUyMiUyRlVzZXJzJTJGbW95b3Nvb3Jlb2x1d2ElMkZEb2N1bWVudHMlMkZDT0RJTkclMjBQUk9KRUNUUyUyRldFQkRFViUyRm1veW96b24tc3NyJTJGZnJvbnRlbmQlMkZzcmMlMkZhcHAlMkZwYWdlLnRzeCUyMiUyQyUyMmlkcyUyMiUzQSU1QiU1RCU3RCZzZXJ2ZXI9dHJ1ZSEiLCJtYXBwaW5ncyI6IkFBQUEsZ0pBQWlJIiwic291cmNlcyI6WyIiXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0KC8qIHdlYnBhY2tNb2RlOiBcImVhZ2VyXCIgKi8gXCIvVXNlcnMvbW95b3Nvb3Jlb2x1d2EvRG9jdW1lbnRzL0NPRElORyBQUk9KRUNUUy9XRUJERVYvbW95b3pvbi1zc3IvZnJvbnRlbmQvc3JjL2FwcC9wYWdlLnRzeFwiKTtcbiJdLCJuYW1lcyI6W10sImlnbm9yZUxpc3QiOltdLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-client-entry-loader.js?modules=%7B%22request%22%3A%22%2FUsers%2Fmoyosooreoluwa%2FDocuments%2FCODING%20PROJECTS%2FWEBDEV%2Fmoyozon-ssr%2Ffrontend%2Fsrc%2Fapp%2Fpage.tsx%22%2C%22ids%22%3A%5B%5D%7D&server=true!\n");
 
 /***/ }),
 
@@ -93,7 +93,19 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ Home)\n/* harmony export */ });\n/* harmony import */ var react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-dev-runtime */ \"(rsc)/./node_modules/next/dist/server/route-modules/app-page/vendored/rsc/react-jsx-dev-runtime.js\");\n/* harmony import */ var react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__);\n\nfunction Home() {\n    return /*#__PURE__*/ (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {}, void 0, false);\n}\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKHJzYykvLi9zcmMvYXBwL3BhZ2UudHN4IiwibWFwcGluZ3MiOiI7Ozs7Ozs7QUFBZSxTQUFTQTtJQUN0QixxQkFBTztBQUNUIiwic291cmNlcyI6WyIvVXNlcnMvbW95b3Nvb3Jlb2x1d2EvRG9jdW1lbnRzL0NPRElORyBQUk9KRUNUUy9XRUJERVYvbW95b3pvbi1zc3IvZnJvbnRlbmQvc3JjL2FwcC9wYWdlLnRzeCJdLCJzb3VyY2VzQ29udGVudCI6WyJleHBvcnQgZGVmYXVsdCBmdW5jdGlvbiBIb21lKCkge1xuICByZXR1cm4gPD48Lz47XG59XG4iXSwibmFtZXMiOlsiSG9tZSJdLCJpZ25vcmVMaXN0IjpbXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///(rsc)/./src/app/page.tsx\n");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react_server_dom_webpack_server_edge__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-server-dom-webpack/server.edge */ "(rsc)/./node_modules/next/dist/server/route-modules/app-page/vendored/rsc/react-server-dom-webpack-server-edge.js");
+/* harmony import */ var react_server_dom_webpack_server_edge__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_server_dom_webpack_server_edge__WEBPACK_IMPORTED_MODULE_0__);
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_server_dom_webpack_server_edge__WEBPACK_IMPORTED_MODULE_0__.registerClientReference)(
+function() { throw new Error("Attempted to call the default export of \"/Users/moyosooreoluwa/Documents/CODING PROJECTS/WEBDEV/moyozon-ssr/frontend/src/app/page.tsx\" from the server, but it's on the client. It's not possible to invoke a client function from the server, it can only be rendered as a Component or passed to props of a Client Component."); },
+"/Users/moyosooreoluwa/Documents/CODING PROJECTS/WEBDEV/moyozon-ssr/frontend/src/app/page.tsx",
+"default",
+));
+
 
 /***/ }),
 
@@ -140,13 +152,24 @@ eval("Promise.resolve(/*! import() eager */).then(__webpack_require__.bind(__web
 
 /***/ }),
 
-/***/ "(ssr)/./node_modules/next/dist/build/webpack/loaders/next-flight-client-entry-loader.js?server=true!":
-/*!******************************************************************************************************!*\
-  !*** ./node_modules/next/dist/build/webpack/loaders/next-flight-client-entry-loader.js?server=true! ***!
-  \******************************************************************************************************/
-/***/ (() => {
+/***/ "(ssr)/./node_modules/next/dist/build/webpack/loaders/next-flight-client-entry-loader.js?modules=%7B%22request%22%3A%22%2FUsers%2Fmoyosooreoluwa%2FDocuments%2FCODING%20PROJECTS%2FWEBDEV%2Fmoyozon-ssr%2Ffrontend%2Fsrc%2Fapp%2Fpage.tsx%22%2C%22ids%22%3A%5B%5D%7D&server=true!":
+/*!**********************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/next/dist/build/webpack/loaders/next-flight-client-entry-loader.js?modules=%7B%22request%22%3A%22%2FUsers%2Fmoyosooreoluwa%2FDocuments%2FCODING%20PROJECTS%2FWEBDEV%2Fmoyozon-ssr%2Ffrontend%2Fsrc%2Fapp%2Fpage.tsx%22%2C%22ids%22%3A%5B%5D%7D&server=true! ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
+eval("Promise.resolve(/*! import() eager */).then(__webpack_require__.bind(__webpack_require__, /*! ./src/app/page.tsx */ \"(ssr)/./src/app/page.tsx\"));\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKHNzcikvLi9ub2RlX21vZHVsZXMvbmV4dC9kaXN0L2J1aWxkL3dlYnBhY2svbG9hZGVycy9uZXh0LWZsaWdodC1jbGllbnQtZW50cnktbG9hZGVyLmpzP21vZHVsZXM9JTdCJTIycmVxdWVzdCUyMiUzQSUyMiUyRlVzZXJzJTJGbW95b3Nvb3Jlb2x1d2ElMkZEb2N1bWVudHMlMkZDT0RJTkclMjBQUk9KRUNUUyUyRldFQkRFViUyRm1veW96b24tc3NyJTJGZnJvbnRlbmQlMkZzcmMlMkZhcHAlMkZwYWdlLnRzeCUyMiUyQyUyMmlkcyUyMiUzQSU1QiU1RCU3RCZzZXJ2ZXI9dHJ1ZSEiLCJtYXBwaW5ncyI6IkFBQUEsZ0pBQWlJIiwic291cmNlcyI6WyIiXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0KC8qIHdlYnBhY2tNb2RlOiBcImVhZ2VyXCIgKi8gXCIvVXNlcnMvbW95b3Nvb3Jlb2x1d2EvRG9jdW1lbnRzL0NPRElORyBQUk9KRUNUUy9XRUJERVYvbW95b3pvbi1zc3IvZnJvbnRlbmQvc3JjL2FwcC9wYWdlLnRzeFwiKTtcbiJdLCJuYW1lcyI6W10sImlnbm9yZUxpc3QiOltdLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///(ssr)/./node_modules/next/dist/build/webpack/loaders/next-flight-client-entry-loader.js?modules=%7B%22request%22%3A%22%2FUsers%2Fmoyosooreoluwa%2FDocuments%2FCODING%20PROJECTS%2FWEBDEV%2Fmoyozon-ssr%2Ffrontend%2Fsrc%2Fapp%2Fpage.tsx%22%2C%22ids%22%3A%5B%5D%7D&server=true!\n");
 
+/***/ }),
+
+/***/ "(ssr)/./src/app/page.tsx":
+/*!**************************!*\
+  !*** ./src/app/page.tsx ***!
+  \**************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ Home)\n/* harmony export */ });\n/* harmony import */ var react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-dev-runtime */ \"(ssr)/./node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react-jsx-dev-runtime.js\");\n/* harmony import */ var react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ \"(ssr)/./node_modules/axios/lib/axios.js\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ \"(ssr)/./node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react.js\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _barrel_optimize_names_Col_Container_Row_react_bootstrap__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! __barrel_optimize__?names=Col,Container,Row!=!react-bootstrap */ \"(ssr)/./node_modules/react-bootstrap/esm/Container.js\");\n/* harmony import */ var _barrel_optimize_names_Col_Container_Row_react_bootstrap__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! __barrel_optimize__?names=Col,Container,Row!=!react-bootstrap */ \"(ssr)/./node_modules/react-bootstrap/esm/Row.js\");\n/* harmony import */ var _barrel_optimize_names_Col_Container_Row_react_bootstrap__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! __barrel_optimize__?names=Col,Container,Row!=!react-bootstrap */ \"(ssr)/./node_modules/react-bootstrap/esm/Col.js\");\n/* __next_internal_client_entry_do_not_use__ default auto */ \n\n\n\nconst reducer = (state, action)=>{\n    switch(action.type){\n        case 'FETCH_REQUEST':\n            return {\n                ...state,\n                loading: true\n            };\n        case 'FETCH_SUCCESS':\n            return {\n                ...state,\n                products: action.payload,\n                loading: false\n            };\n        case 'FETCH_FAIL':\n            return {\n                ...state,\n                loading: false,\n                error: action.payload\n            };\n        default:\n            return state;\n    }\n};\nfunction Home() {\n    const [{ loading, error, products }, dispatch] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useReducer)(reducer, {\n        products: [],\n        loading: true,\n        error: ''\n    });\n    // const [products, setProducts] = useState([]);\n    (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)({\n        \"Home.useEffect\": ()=>{\n            const fetchData = {\n                \"Home.useEffect.fetchData\": async ()=>{\n                    dispatch({\n                        type: 'FETCH_REQUEST'\n                    });\n                    try {\n                        const result = await axios__WEBPACK_IMPORTED_MODULE_2__[\"default\"].get('/api/products');\n                        dispatch({\n                            type: 'FETCH_SUCCESS',\n                            payload: result.data\n                        });\n                    } catch (err) {\n                        dispatch({\n                            type: 'FETCH_FAIL',\n                            payload: err.message\n                        });\n                    }\n                // setProducts(result.data);\n                }\n            }[\"Home.useEffect.fetchData\"];\n            fetchData();\n        }\n    }[\"Home.useEffect\"], []);\n    return /*#__PURE__*/ (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {\n        children: /*#__PURE__*/ (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_barrel_optimize_names_Col_Container_Row_react_bootstrap__WEBPACK_IMPORTED_MODULE_3__[\"default\"], {\n            className: \"my-2\",\n            children: /*#__PURE__*/ (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(\"div\", {\n                children: [\n                    /*#__PURE__*/ (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(\"h1\", {\n                        children: \"Featured Products\"\n                    }, void 0, false, {\n                        fileName: \"/Users/moyosooreoluwa/Documents/CODING PROJECTS/WEBDEV/moyozon-ssr/frontend/src/app/page.tsx\",\n                        lineNumber: 44,\n                        columnNumber: 11\n                    }, this),\n                    /*#__PURE__*/ (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(\"div\", {\n                        className: \"products\",\n                        children: loading ? /*#__PURE__*/ (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(\"div\", {\n                            children: \"Loading...\"\n                        }, void 0, false, {\n                            fileName: \"/Users/moyosooreoluwa/Documents/CODING PROJECTS/WEBDEV/moyozon-ssr/frontend/src/app/page.tsx\",\n                            lineNumber: 47,\n                            columnNumber: 15\n                        }, this) : error ? /*#__PURE__*/ (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(\"div\", {\n                            children: error\n                        }, void 0, false, {\n                            fileName: \"/Users/moyosooreoluwa/Documents/CODING PROJECTS/WEBDEV/moyozon-ssr/frontend/src/app/page.tsx\",\n                            lineNumber: 49,\n                            columnNumber: 15\n                        }, this) : /*#__PURE__*/ (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_barrel_optimize_names_Col_Container_Row_react_bootstrap__WEBPACK_IMPORTED_MODULE_4__[\"default\"], {\n                            children: products.map((product)=>/*#__PURE__*/ (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_barrel_optimize_names_Col_Container_Row_react_bootstrap__WEBPACK_IMPORTED_MODULE_5__[\"default\"], {\n                                    sm: 6,\n                                    md: 4,\n                                    lg: 3,\n                                    className: \"mb-3\",\n                                    children: /*#__PURE__*/ (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(\"p\", {\n                                        children: product.name\n                                    }, void 0, false, {\n                                        fileName: \"/Users/moyosooreoluwa/Documents/CODING PROJECTS/WEBDEV/moyozon-ssr/frontend/src/app/page.tsx\",\n                                        lineNumber: 55,\n                                        columnNumber: 21\n                                    }, this)\n                                }, product.slug, false, {\n                                    fileName: \"/Users/moyosooreoluwa/Documents/CODING PROJECTS/WEBDEV/moyozon-ssr/frontend/src/app/page.tsx\",\n                                    lineNumber: 53,\n                                    columnNumber: 19\n                                }, this))\n                        }, void 0, false, {\n                            fileName: \"/Users/moyosooreoluwa/Documents/CODING PROJECTS/WEBDEV/moyozon-ssr/frontend/src/app/page.tsx\",\n                            lineNumber: 51,\n                            columnNumber: 15\n                        }, this)\n                    }, void 0, false, {\n                        fileName: \"/Users/moyosooreoluwa/Documents/CODING PROJECTS/WEBDEV/moyozon-ssr/frontend/src/app/page.tsx\",\n                        lineNumber: 45,\n                        columnNumber: 11\n                    }, this)\n                ]\n            }, void 0, true, {\n                fileName: \"/Users/moyosooreoluwa/Documents/CODING PROJECTS/WEBDEV/moyozon-ssr/frontend/src/app/page.tsx\",\n                lineNumber: 43,\n                columnNumber: 9\n            }, this)\n        }, void 0, false, {\n            fileName: \"/Users/moyosooreoluwa/Documents/CODING PROJECTS/WEBDEV/moyozon-ssr/frontend/src/app/page.tsx\",\n            lineNumber: 42,\n            columnNumber: 7\n        }, this)\n    }, void 0, false);\n}\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKHNzcikvLi9zcmMvYXBwL3BhZ2UudHN4IiwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7QUFDMEI7QUFDb0I7QUFDUTtBQUV0RCxNQUFNTSxVQUFVLENBQUNDLE9BQU9DO0lBQ3RCLE9BQVFBLE9BQU9DLElBQUk7UUFDakIsS0FBSztZQUNILE9BQU87Z0JBQUUsR0FBR0YsS0FBSztnQkFBRUcsU0FBUztZQUFLO1FBQ25DLEtBQUs7WUFDSCxPQUFPO2dCQUFFLEdBQUdILEtBQUs7Z0JBQUVJLFVBQVVILE9BQU9JLE9BQU87Z0JBQUVGLFNBQVM7WUFBTTtRQUM5RCxLQUFLO1lBQ0gsT0FBTztnQkFBRSxHQUFHSCxLQUFLO2dCQUFFRyxTQUFTO2dCQUFPRyxPQUFPTCxPQUFPSSxPQUFPO1lBQUM7UUFDM0Q7WUFDRSxPQUFPTDtJQUNYO0FBQ0Y7QUFFZSxTQUFTTztJQUN0QixNQUFNLENBQUMsRUFBRUosT0FBTyxFQUFFRyxLQUFLLEVBQUVGLFFBQVEsRUFBRSxFQUFFSSxTQUFTLEdBQUdiLGlEQUFVQSxDQUFDSSxTQUFTO1FBQ25FSyxVQUFVLEVBQUU7UUFDWkQsU0FBUztRQUNURyxPQUFPO0lBQ1Q7SUFDQSxnREFBZ0Q7SUFDaERaLGdEQUFTQTswQkFBQztZQUNSLE1BQU1lOzRDQUFZO29CQUNoQkQsU0FBUzt3QkFBRU4sTUFBTTtvQkFBZ0I7b0JBQ2pDLElBQUk7d0JBQ0YsTUFBTVEsU0FBUyxNQUFNakIsNkNBQUtBLENBQUNrQixHQUFHLENBQUM7d0JBQy9CSCxTQUFTOzRCQUFFTixNQUFNOzRCQUFpQkcsU0FBU0ssT0FBT0UsSUFBSTt3QkFBQztvQkFDekQsRUFBRSxPQUFPQyxLQUFLO3dCQUNaTCxTQUFTOzRCQUFFTixNQUFNOzRCQUFjRyxTQUFTUSxJQUFJQyxPQUFPO3dCQUFDO29CQUN0RDtnQkFFQSw0QkFBNEI7Z0JBQzlCOztZQUNBTDtRQUNGO3lCQUFHLEVBQUU7SUFDTCxxQkFDRTtrQkFDRSw0RUFBQ1osZ0dBQVNBO1lBQUNrQixXQUFVO3NCQUNuQiw0RUFBQ0M7O2tDQUNDLDhEQUFDQztrQ0FBRzs7Ozs7O2tDQUNKLDhEQUFDRDt3QkFBSUQsV0FBVTtrQ0FDWlosd0JBQ0MsOERBQUNhO3NDQUFJOzs7OzttQ0FDSFYsc0JBQ0YsOERBQUNVO3NDQUFLVjs7Ozs7aURBRU4sOERBQUNSLGdHQUFHQTtzQ0FDRE0sU0FBU2MsR0FBRyxDQUFDLENBQUNDLHdCQUNiLDhEQUFDdkIsZ0dBQUdBO29DQUFvQndCLElBQUk7b0NBQUdDLElBQUk7b0NBQUdDLElBQUk7b0NBQUdQLFdBQVU7OENBRXJELDRFQUFDUTtrREFBR0osUUFBUUssSUFBSTs7Ozs7O21DQUZSTCxRQUFRTSxJQUFJOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFZeEMiLCJzb3VyY2VzIjpbIi9Vc2Vycy9tb3lvc29vcmVvbHV3YS9Eb2N1bWVudHMvQ09ESU5HIFBST0pFQ1RTL1dFQkRFVi9tb3lvem9uLXNzci9mcm9udGVuZC9zcmMvYXBwL3BhZ2UudHN4Il0sInNvdXJjZXNDb250ZW50IjpbIid1c2UgY2xpZW50JztcbmltcG9ydCBheGlvcyBmcm9tICdheGlvcyc7XG5pbXBvcnQgeyB1c2VFZmZlY3QsIHVzZVJlZHVjZXIgfSBmcm9tICdyZWFjdCc7XG5pbXBvcnQgeyBDb2wsIENvbnRhaW5lciwgUm93IH0gZnJvbSAncmVhY3QtYm9vdHN0cmFwJztcblxuY29uc3QgcmVkdWNlciA9IChzdGF0ZSwgYWN0aW9uKSA9PiB7XG4gIHN3aXRjaCAoYWN0aW9uLnR5cGUpIHtcbiAgICBjYXNlICdGRVRDSF9SRVFVRVNUJzpcbiAgICAgIHJldHVybiB7IC4uLnN0YXRlLCBsb2FkaW5nOiB0cnVlIH07XG4gICAgY2FzZSAnRkVUQ0hfU1VDQ0VTUyc6XG4gICAgICByZXR1cm4geyAuLi5zdGF0ZSwgcHJvZHVjdHM6IGFjdGlvbi5wYXlsb2FkLCBsb2FkaW5nOiBmYWxzZSB9O1xuICAgIGNhc2UgJ0ZFVENIX0ZBSUwnOlxuICAgICAgcmV0dXJuIHsgLi4uc3RhdGUsIGxvYWRpbmc6IGZhbHNlLCBlcnJvcjogYWN0aW9uLnBheWxvYWQgfTtcbiAgICBkZWZhdWx0OlxuICAgICAgcmV0dXJuIHN0YXRlO1xuICB9XG59O1xuXG5leHBvcnQgZGVmYXVsdCBmdW5jdGlvbiBIb21lKCkge1xuICBjb25zdCBbeyBsb2FkaW5nLCBlcnJvciwgcHJvZHVjdHMgfSwgZGlzcGF0Y2hdID0gdXNlUmVkdWNlcihyZWR1Y2VyLCB7XG4gICAgcHJvZHVjdHM6IFtdLFxuICAgIGxvYWRpbmc6IHRydWUsXG4gICAgZXJyb3I6ICcnLFxuICB9KTtcbiAgLy8gY29uc3QgW3Byb2R1Y3RzLCBzZXRQcm9kdWN0c10gPSB1c2VTdGF0ZShbXSk7XG4gIHVzZUVmZmVjdCgoKSA9PiB7XG4gICAgY29uc3QgZmV0Y2hEYXRhID0gYXN5bmMgKCkgPT4ge1xuICAgICAgZGlzcGF0Y2goeyB0eXBlOiAnRkVUQ0hfUkVRVUVTVCcgfSk7XG4gICAgICB0cnkge1xuICAgICAgICBjb25zdCByZXN1bHQgPSBhd2FpdCBheGlvcy5nZXQoJy9hcGkvcHJvZHVjdHMnKTtcbiAgICAgICAgZGlzcGF0Y2goeyB0eXBlOiAnRkVUQ0hfU1VDQ0VTUycsIHBheWxvYWQ6IHJlc3VsdC5kYXRhIH0pO1xuICAgICAgfSBjYXRjaCAoZXJyKSB7XG4gICAgICAgIGRpc3BhdGNoKHsgdHlwZTogJ0ZFVENIX0ZBSUwnLCBwYXlsb2FkOiBlcnIubWVzc2FnZSB9KTtcbiAgICAgIH1cblxuICAgICAgLy8gc2V0UHJvZHVjdHMocmVzdWx0LmRhdGEpO1xuICAgIH07XG4gICAgZmV0Y2hEYXRhKCk7XG4gIH0sIFtdKTtcbiAgcmV0dXJuIChcbiAgICA8PlxuICAgICAgPENvbnRhaW5lciBjbGFzc05hbWU9XCJteS0yXCI+XG4gICAgICAgIDxkaXY+XG4gICAgICAgICAgPGgxPkZlYXR1cmVkIFByb2R1Y3RzPC9oMT5cbiAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cInByb2R1Y3RzXCI+XG4gICAgICAgICAgICB7bG9hZGluZyA/IChcbiAgICAgICAgICAgICAgPGRpdj5Mb2FkaW5nLi4uPC9kaXY+XG4gICAgICAgICAgICApIDogZXJyb3IgPyAoXG4gICAgICAgICAgICAgIDxkaXY+e2Vycm9yfTwvZGl2PlxuICAgICAgICAgICAgKSA6IChcbiAgICAgICAgICAgICAgPFJvdz5cbiAgICAgICAgICAgICAgICB7cHJvZHVjdHMubWFwKChwcm9kdWN0KSA9PiAoXG4gICAgICAgICAgICAgICAgICA8Q29sIGtleT17cHJvZHVjdC5zbHVnfSBzbT17Nn0gbWQ9ezR9IGxnPXszfSBjbGFzc05hbWU9XCJtYi0zXCI+XG4gICAgICAgICAgICAgICAgICAgIHsvKiA8UHJvZHVjdCBwcm9kdWN0PXtwcm9kdWN0fT48L1Byb2R1Y3Q+ICovfVxuICAgICAgICAgICAgICAgICAgICA8cD57cHJvZHVjdC5uYW1lfTwvcD5cbiAgICAgICAgICAgICAgICAgIDwvQ29sPlxuICAgICAgICAgICAgICAgICkpfVxuICAgICAgICAgICAgICA8L1Jvdz5cbiAgICAgICAgICAgICl9XG4gICAgICAgICAgPC9kaXY+XG4gICAgICAgIDwvZGl2PlxuICAgICAgPC9Db250YWluZXI+XG4gICAgPC8+XG4gICk7XG59XG4iXSwibmFtZXMiOlsiYXhpb3MiLCJ1c2VFZmZlY3QiLCJ1c2VSZWR1Y2VyIiwiQ29sIiwiQ29udGFpbmVyIiwiUm93IiwicmVkdWNlciIsInN0YXRlIiwiYWN0aW9uIiwidHlwZSIsImxvYWRpbmciLCJwcm9kdWN0cyIsInBheWxvYWQiLCJlcnJvciIsIkhvbWUiLCJkaXNwYXRjaCIsImZldGNoRGF0YSIsInJlc3VsdCIsImdldCIsImRhdGEiLCJlcnIiLCJtZXNzYWdlIiwiY2xhc3NOYW1lIiwiZGl2IiwiaDEiLCJtYXAiLCJwcm9kdWN0Iiwic20iLCJtZCIsImxnIiwicCIsIm5hbWUiLCJzbHVnIl0sImlnbm9yZUxpc3QiOltdLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///(ssr)/./src/app/page.tsx\n");
 
 /***/ }),
 
@@ -205,6 +228,72 @@ module.exports = require("next/dist/server/app-render/work-unit-async-storage.ex
 
 /***/ }),
 
+/***/ "assert":
+/*!*************************!*\
+  !*** external "assert" ***!
+  \*************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("assert");
+
+/***/ }),
+
+/***/ "crypto":
+/*!*************************!*\
+  !*** external "crypto" ***!
+  \*************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("crypto");
+
+/***/ }),
+
+/***/ "events":
+/*!*************************!*\
+  !*** external "events" ***!
+  \*************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("events");
+
+/***/ }),
+
+/***/ "fs":
+/*!*********************!*\
+  !*** external "fs" ***!
+  \*********************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("fs");
+
+/***/ }),
+
+/***/ "http":
+/*!***********************!*\
+  !*** external "http" ***!
+  \***********************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("http");
+
+/***/ }),
+
+/***/ "https":
+/*!************************!*\
+  !*** external "https" ***!
+  \************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("https");
+
+/***/ }),
+
 /***/ "next/dist/compiled/next-server/app-page.runtime.dev.js":
 /*!*************************************************************************!*\
   !*** external "next/dist/compiled/next-server/app-page.runtime.dev.js" ***!
@@ -213,6 +302,17 @@ module.exports = require("next/dist/server/app-render/work-unit-async-storage.ex
 
 "use strict";
 module.exports = require("next/dist/compiled/next-server/app-page.runtime.dev.js");
+
+/***/ }),
+
+/***/ "os":
+/*!*********************!*\
+  !*** external "os" ***!
+  \*********************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("os");
 
 /***/ }),
 
@@ -227,6 +327,28 @@ module.exports = require("path");
 
 /***/ }),
 
+/***/ "stream":
+/*!*************************!*\
+  !*** external "stream" ***!
+  \*************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("stream");
+
+/***/ }),
+
+/***/ "tty":
+/*!**********************!*\
+  !*** external "tty" ***!
+  \**********************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("tty");
+
+/***/ }),
+
 /***/ "url":
 /*!**********************!*\
   !*** external "url" ***!
@@ -235,6 +357,28 @@ module.exports = require("path");
 
 "use strict";
 module.exports = require("url");
+
+/***/ }),
+
+/***/ "util":
+/*!***********************!*\
+  !*** external "util" ***!
+  \***********************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("util");
+
+/***/ }),
+
+/***/ "zlib":
+/*!***********************!*\
+  !*** external "zlib" ***!
+  \***********************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("zlib");
 
 /***/ })
 
@@ -245,7 +389,7 @@ module.exports = require("url");
 var __webpack_require__ = require("../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, ["vendor-chunks/next","vendor-chunks/@swc","vendor-chunks/@restart","vendor-chunks/react-bootstrap","vendor-chunks/dom-helpers","vendor-chunks/react-icons","vendor-chunks/react-transition-group","vendor-chunks/prop-types","vendor-chunks/@babel","vendor-chunks/uncontrollable","vendor-chunks/react-is","vendor-chunks/classnames","vendor-chunks/react-toastify","vendor-chunks/bootstrap","vendor-chunks/react-lifecycles-compat","vendor-chunks/object-assign","vendor-chunks/invariant"], () => (__webpack_exec__("(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fpage&page=%2Fpage&appPaths=%2Fpage&pagePath=private-next-app-dir%2Fpage.tsx&appDir=%2FUsers%2Fmoyosooreoluwa%2FDocuments%2FCODING%20PROJECTS%2FWEBDEV%2Fmoyozon-ssr%2Ffrontend%2Fsrc%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2FUsers%2Fmoyosooreoluwa%2FDocuments%2FCODING%20PROJECTS%2FWEBDEV%2Fmoyozon-ssr%2Ffrontend&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D!")));
+var __webpack_exports__ = __webpack_require__.X(0, ["vendor-chunks/react-icons","vendor-chunks/next","vendor-chunks/@restart","vendor-chunks/react-bootstrap","vendor-chunks/prop-types","vendor-chunks/react-transition-group","vendor-chunks/uncontrollable","vendor-chunks/dom-helpers","vendor-chunks/react-is","vendor-chunks/react-lifecycles-compat","vendor-chunks/@swc","vendor-chunks/object-assign","vendor-chunks/classnames","vendor-chunks/invariant","vendor-chunks/@babel","vendor-chunks/react-toastify","vendor-chunks/bootstrap","vendor-chunks/axios","vendor-chunks/asynckit","vendor-chunks/math-intrinsics","vendor-chunks/es-errors","vendor-chunks/call-bind-apply-helpers","vendor-chunks/debug","vendor-chunks/get-proto","vendor-chunks/mime-db","vendor-chunks/has-symbols","vendor-chunks/gopd","vendor-chunks/function-bind","vendor-chunks/form-data","vendor-chunks/follow-redirects","vendor-chunks/supports-color","vendor-chunks/proxy-from-env","vendor-chunks/ms","vendor-chunks/mime-types","vendor-chunks/hasown","vendor-chunks/has-tostringtag","vendor-chunks/has-flag","vendor-chunks/get-intrinsic","vendor-chunks/es-set-tostringtag","vendor-chunks/es-object-atoms","vendor-chunks/es-define-property","vendor-chunks/dunder-proto","vendor-chunks/delayed-stream","vendor-chunks/combined-stream"], () => (__webpack_exec__("(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fpage&page=%2Fpage&appPaths=%2Fpage&pagePath=private-next-app-dir%2Fpage.tsx&appDir=%2FUsers%2Fmoyosooreoluwa%2FDocuments%2FCODING%20PROJECTS%2FWEBDEV%2Fmoyozon-ssr%2Ffrontend%2Fsrc%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2FUsers%2Fmoyosooreoluwa%2FDocuments%2FCODING%20PROJECTS%2FWEBDEV%2Fmoyozon-ssr%2Ffrontend&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D!")));
 module.exports = __webpack_exports__;
 
 })();
