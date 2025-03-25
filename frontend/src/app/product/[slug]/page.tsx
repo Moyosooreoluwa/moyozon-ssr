@@ -4,6 +4,7 @@ import MessageBox from '@/components/MessageBox';
 import Rating from '@/components/Rating';
 import { getError } from '@/utils/errorHandler';
 import axios from 'axios';
+import { Metadata } from 'next';
 import Image from 'next/image';
 import { CardBody, ListGroupItem } from 'react-bootstrap';
 import Badge from 'react-bootstrap/Badge';
@@ -25,6 +26,35 @@ interface Product {
   slug: string;
   category: string;
   brand: string;
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}): Promise<Metadata> {
+  const { slug } = params;
+  try {
+    const { data: product } = await axios.get<Product>(
+      `http://localhost:5000/api/products/slug/${slug}`
+    );
+
+    return {
+      title: `${product.name} | Moyozon`,
+      description: product.description,
+      // optionally:
+      openGraph: {
+        title: `${product.name} | Moyozon`,
+        description: product.description,
+      },
+    };
+  } catch (err) {
+    console.log(err);
+
+    return {
+      title: 'Product Not Found | Moyozon',
+    };
+  }
 }
 
 export default async function ProductPage({
