@@ -1,8 +1,10 @@
 'use client';
 
+import { StoreContext } from '@/store/Store';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
+  Badge,
   Button,
   Container,
   Nav,
@@ -16,6 +18,9 @@ import { GiHamburgerMenu } from 'react-icons/gi';
 
 const NavigationBar = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { state } = useContext(StoreContext);
+  const { cart } = state;
+  console.log('cart: ', cart);
 
   return (
     <>
@@ -40,11 +45,11 @@ const NavigationBar = () => {
               <Nav className="me-auto w-100 justify-content-end">
                 <Link href="/cart" className="nav-link">
                   Cart
-                  {/* {cart.cartItems.length > 0 && (
-                      <Badge pill bg="danger">
-                        {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
-                      </Badge>
-                    )} */}
+                  {cart?.cartItems?.length > 0 && (
+                    <Badge pill bg="danger">
+                      {cart?.cartItems?.reduce((a, c) => a + c.quantity, 0)}
+                    </Badge>
+                  )}
                 </Link>
                 {/* {userInfo && (
                     <NavDropdown title={userInfo.name} id="basic-nav-dropdown">

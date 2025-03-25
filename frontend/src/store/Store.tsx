@@ -4,11 +4,18 @@ import React, { createContext, useReducer, ReactNode, Dispatch } from 'react';
 import Cookies from 'js-cookie';
 
 export interface CartItem {
-  //   _id: string;
+  _id: string;
   name: string;
-  //   quantity: number;
+  image: string;
+  description: string;
   price: number;
-  //   image: string;
+  stockCount: number;
+  rating: number;
+  reviewCount: number;
+  slug: string;
+  category: string;
+  brand: string;
+  quantity: number;
 }
 
 export interface ShippingAddress {
@@ -56,28 +63,23 @@ export function reducer(state: StateType, action: ActionType): StateType {
   console.log(action);
   switch (action.type) {
     case 'CART_ADD_ITEM': {
-      //   const existItem = state.cart.cartItems.find(
-      //     (item) => item._id === action.payload._id
-      //   );
-      //   const cartItems = existItem
-      //     ? state.cart.cartItems.map((item) =>
-      //         item._id === existItem._id ? action.payload : item
-      //       )
-      //     : [...state.cart.cartItems, action.payload];
-
-      Cookies.set(
-        'cartItems',
-        JSON.stringify([...state.cart.cartItems, action.payload])
+      const newItem = action.payload;
+      const existItem = state?.cart?.cartItems?.find(
+        (item) => item._id === newItem._id
       );
-      //   Cookies.set('cartItems', JSON.stringify(cartItems));
+      const cartItems = existItem
+        ? state.cart.cartItems.map((item) =>
+            item._id === existItem._id ? newItem : item
+          )
+        : [...state.cart.cartItems, newItem];
+      Cookies.set('cartItems', JSON.stringify(cartItems));
       return {
         ...state,
         cart: {
           ...state.cart,
-          cartItems: [...state.cart.cartItems, action.payload],
+          cartItems,
         },
       };
-      //   return { ...state, cart: { ...state.cart, cartItems } };
     }
     // case 'CART_REMOVE_ITEM': {
     //   const cartItems = state.cart.cartItems.filter(

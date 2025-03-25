@@ -1,7 +1,7 @@
 import { cookies } from 'next/headers';
 
 export async function getInitialCartFromCookies() {
-  const cookieStore = await cookies(); // ⬅️ Await here
+  const cookieStore = await cookies();
   const cartItems = cookieStore.get('cartItems');
   const shippingAddress = cookieStore.get('shippingAddress');
   const paymentMethod = cookieStore.get('paymentMethod');

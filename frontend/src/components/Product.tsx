@@ -1,10 +1,12 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { Button, Card, CardBody, CardText, CardTitle } from 'react-bootstrap';
+import { Card, CardBody, CardText, CardTitle } from 'react-bootstrap';
 import Rating from './Rating';
+import AddToCartButton from './AddToCartButton';
 
 type ProductProps = {
   product: {
+    _id: string;
     name: string;
     image: string;
     description: string;
@@ -55,7 +57,7 @@ const Product = ({ product }: ProductProps) => {
         </Link>
         <Rating rating={product.rating} reviewCount={product.reviewCount} />
         <CardText className="">${product.price.toFixed(2)}</CardText>
-        <Button>Add to cart</Button>
+        <AddToCartButton product={product} />
       </CardBody>
     </Card>
   );

@@ -7,7 +7,6 @@ import axios from 'axios';
 import Image from 'next/image';
 import { CardBody, ListGroupItem } from 'react-bootstrap';
 import Badge from 'react-bootstrap/Badge';
-// import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
@@ -15,6 +14,7 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
 
 interface Product {
+  _id: string;
   name: string;
   image: string;
   description: string;
