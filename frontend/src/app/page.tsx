@@ -4,6 +4,7 @@ import axios from 'axios';
 import MessageBox from '@/components/MessageBox';
 
 interface ProductType {
+  _id: string;
   name: string;
   image: string;
   description: string;
