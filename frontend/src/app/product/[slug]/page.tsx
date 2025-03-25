@@ -1,3 +1,4 @@
+import AddToCartButton from '@/components/AddToCartButton';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import MessageBox from '@/components/MessageBox';
 import Rating from '@/components/Rating';
@@ -6,7 +7,7 @@ import axios from 'axios';
 import Image from 'next/image';
 import { CardBody, ListGroupItem } from 'react-bootstrap';
 import Badge from 'react-bootstrap/Badge';
-import Button from 'react-bootstrap/Button';
+// import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
@@ -107,7 +108,8 @@ export default async function ProductPage({
                   {product.stockCount > 0 && (
                     <ListGroupItem>
                       <div className="d-grid">
-                        <Button variant="primary">Add to Cart</Button>
+                        {/* <Button variant="primary">Add to Cart</Button> */}
+                        <AddToCartButton product={product} />
                       </div>
                     </ListGroupItem>
                   )}
