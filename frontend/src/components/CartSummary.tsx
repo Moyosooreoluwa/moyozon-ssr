@@ -14,11 +14,45 @@ import MessageBox from './MessageBox';
 import Link from 'next/link';
 import Image from 'next/image';
 import { FaCircleMinus, FaCirclePlus, FaTrash } from 'react-icons/fa6';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
+
+interface CartItem {
+  _id: string;
+  name: string;
+  image: string;
+  description: string;
+  price: number;
+  stockCount: number;
+  rating: number;
+  reviewCount: number;
+  slug: string;
+  category: string;
+  brand: string;
+  quantity: number;
+}
 
 export default function CartSummary() {
+  const router = useRouter();
   const { state, dispatch } = useContext(StoreContext);
   const { cart } = state;
   console.log(cart);
+
+  const updateCartHandler = async (item: CartItem, quantity: number) => {
+    const { data } = await axios.get(`/api/products/${item._id}`);
+    if (data.countInStock < quantity) {
+      window.alert('Sorry. Product is out of stock');
+      return;
+    }
+    dispatch({
+      type: 'CART_ADD_ITEM',
+      payload: { ...item, quantity },
+    });
+  };
+
+  const removeItemHandler = (item: CartItem) => {
+    dispatch({ type: 'CART_REMOVE_ITEM', payload: item });
+  };
   return (
     <>
       <Col md={8}>
@@ -46,20 +80,28 @@ export default function CartSummary() {
                     </Link>
                   </Col>
                   <Col md={3}>
-                    <Button variant="light" disabled={item.quantity === 1}>
+                    <Button
+                      variant="light"
+                      disabled={item.quantity === 1}
+                      onClick={() => updateCartHandler(item, item.quantity - 1)}
+                    >
                       <FaCircleMinus />
                     </Button>{' '}
                     <span>{item.quantity}</span>{' '}
                     <Button
                       variant="light"
                       disabled={item.quantity === item.stockCount}
+                      onClick={() => updateCartHandler(item, item.quantity + 1)}
                     >
                       <FaCirclePlus />
                     </Button>
                   </Col>
                   <Col md={3}>${item.price.toFixed(2)}</Col>
                   <Col md={2}>
-                    <Button variant="danger">
+                    <Button
+                      variant="danger"
+                      onClick={() => removeItemHandler(item)}
+                    >
                       <FaTrash />
                     </Button>
                   </Col>
@@ -88,6 +130,7 @@ export default function CartSummary() {
                     type="button"
                     variant="primary"
                     disabled={cart.cartItems.length === 0}
+                    onClick={() => router.push('/')}
                   >
                     Proceed to Checkout
                   </Button>

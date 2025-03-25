@@ -37,11 +37,12 @@ interface StateType {
   cart: Cart;
 }
 
-export type ActionType = { type: 'CART_ADD_ITEM'; payload: CartItem };
-//   | { type: 'CART_REMOVE_ITEM'; payload: string }
-//   | { type: 'CART_RESET' }
-//   | { type: 'CART_SET_PAYMENT'; payload: string }
-//   | { type: 'CART_SET_SHIPPING'; payload: ShippingAddress };
+export type ActionType =
+  | { type: 'CART_ADD_ITEM'; payload: CartItem }
+  | { type: 'CART_REMOVE_ITEM'; payload: CartItem };
+// | { type: 'CART_RESET' }
+// | { type: 'CART_SET_PAYMENT'; payload: string }
+// | { type: 'CART_SET_SHIPPING'; payload: ShippingAddress };
 
 const initialState: StateType = {
   cart: {
@@ -81,12 +82,13 @@ export function reducer(state: StateType, action: ActionType): StateType {
         },
       };
     }
-    // case 'CART_REMOVE_ITEM': {
-    //   const cartItems = state.cart.cartItems.filter(
-    //     (item) => item._id !== action.payload
-    //   );
-    //   return { ...state, cart: { ...state.cart, cartItems } };
-    // }
+    case 'CART_REMOVE_ITEM': {
+      const cartItems = state.cart.cartItems.filter(
+        (item) => item._id !== action.payload._id
+      );
+      Cookies.set('cartItems', JSON.stringify(cartItems));
+      return { ...state, cart: { ...state.cart, cartItems } };
+    }
     // case 'CART_SET_PAYMENT':
     //   return {
     //     ...state,
