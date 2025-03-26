@@ -16,11 +16,7 @@ export async function getInitialCartFromCookies() {
 }
 
 export async function getUserInfoFromCookies() {
-  const cookieStore = await cookies();
-  const userInfo = cookieStore.get('userInfo');
-  const value = userInfo ? JSON.parse(userInfo.value) : {};
-
-  return {
-    ...value,
-  };
+  const cookie = await cookies();
+  const userInfo = cookie.get('userInfo');
+  return userInfo ? JSON.parse(userInfo.value) : null;
 }

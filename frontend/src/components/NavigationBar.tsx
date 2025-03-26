@@ -23,12 +23,10 @@ const NavigationBar = () => {
   const { state, dispatch } = useContext(StoreContext);
   const { cart, userInfo } = state;
   const router = useRouter();
-  console.log(userInfo);
 
   const signoutHandler = () => {
     dispatch({ type: 'USER_SIGNOUT' });
     router.push('/signin');
-    router.replace('/signin');
   };
 
   return (
@@ -72,6 +70,7 @@ const NavigationBar = () => {
                     <Link
                       className="dropdown-item"
                       href="#signout"
+                      // href="/signin"
                       onClick={signoutHandler}
                     >
                       Sign Out
