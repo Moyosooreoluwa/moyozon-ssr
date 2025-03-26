@@ -50,9 +50,9 @@ export type ActionType =
   | { type: 'CART_REMOVE_ITEM'; payload: CartItem }
   | { type: 'USER_SIGNIN'; payload: UserInfo }
   | { type: 'USER_SIGNOUT' }
-  | { type: 'SAVE_SHIPPING_ADDRESS'; payload: ShippingAddress };
+  | { type: 'SAVE_SHIPPING_ADDRESS'; payload: ShippingAddress }
+  | { type: 'SAVE_PAYMENT_METHOD'; payload: string };
 // | { type: 'CART_RESET' }
-// | { type: 'CART_SET_PAYMENT'; payload: string }
 
 const initialState: StateType = {
   cart: {
@@ -120,11 +120,12 @@ export function reducer(state: StateType, action: ActionType): StateType {
         ...state,
         cart: { ...state.cart, shippingAddress: action.payload },
       };
-    // case 'CART_SET_PAYMENT':
-    //   return {
-    //     ...state,
-    //     cart: { ...state.cart, paymentMethod: action.payload },
-    //   };
+    case 'SAVE_PAYMENT_METHOD':
+      Cookies.set('paymentMethod', JSON.stringify(action.payload));
+      return {
+        ...state,
+        cart: { ...state.cart, paymentMethod: action.payload },
+      };
     // case 'CART_RESET':
     //   return initialState;
     default:

@@ -33,7 +33,7 @@ const CheckoutSteps: React.FC<CheckoutStepsProps> = (props) => {
       <Col
         className={`pb-2 ${
           props.step3
-            ? 'text-orange-500 border-b-2 border-orange-500'
+            ? 'text-green-600 border-b-2 border-green-600'
             : 'text-gray-500 border-b-2 border-gray-500'
         }`}
       >
@@ -42,7 +42,7 @@ const CheckoutSteps: React.FC<CheckoutStepsProps> = (props) => {
       <Col
         className={`pb-2 ${
           props.step4
-            ? 'text-orange-500 border-b-2 border-orange-500'
+            ? 'text-green-600 border-b-2 border-green-600'
             : 'text-gray-500 border-b-2 border-gray-500'
         }`}
       >

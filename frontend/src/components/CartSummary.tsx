@@ -130,7 +130,7 @@ export default function CartSummary() {
                     type="button"
                     variant="primary"
                     disabled={cart.cartItems.length === 0}
-                    onClick={() => router.push('/')}
+                    onClick={() => router.push('/shipping')}
                   >
                     Proceed to Checkout
                   </Button>
