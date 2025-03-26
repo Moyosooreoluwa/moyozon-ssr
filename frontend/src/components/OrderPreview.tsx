@@ -3,7 +3,8 @@ import { StoreContext } from '@/store/Store';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import React, { useContext, useEffect } from 'react';
+import axios from 'axios';
+import React, { useContext, useEffect, useReducer } from 'react';
 import {
   Button,
   Card,
@@ -15,11 +16,40 @@ import {
   ListGroupItem,
   Row,
 } from 'react-bootstrap';
+import { getError } from '@/utils/errorHandler';
+import { toast } from 'react-toastify';
+import LoadingSpinner from './LoadingSpinner';
 
+interface State {
+  loading: boolean;
+  // Add other state properties here if needed
+}
+
+type Action =
+  | { type: 'CREATE_REQUEST' }
+  | { type: 'CREATE_SUCCESS' }
+  | { type: 'CREATE_FAIL' };
+
+const reducer = (state: State, action: Action): State => {
+  switch (action.type) {
+    case 'CREATE_REQUEST':
+      return { ...state, loading: true };
+    case 'CREATE_SUCCESS':
+      return { ...state, loading: false };
+    case 'CREATE_FAIL':
+      return { ...state, loading: false };
+    default:
+      return state;
+  }
+};
 export default function OrderPreview() {
   const router = useRouter();
   const { state, dispatch } = useContext(StoreContext);
   const { cart, userInfo } = state;
+  const [{ loading }, rdcDispatch] = useReducer(reducer, {
+    loading: false,
+  });
+  //rdcDispatch since a dispatch already exists
 
   const round2 = (num: number) => Math.round(num * 100 + Number.EPSILON) / 100; // 123.2345 => 123.23
   cart.itemsPrice = round2(
@@ -29,7 +59,36 @@ export default function OrderPreview() {
   cart.taxPrice = round2(0.15 * cart.itemsPrice);
   cart.totalPrice = cart.itemsPrice + cart.shippingPrice + cart.taxPrice;
 
-  const placeOrderHandler = async () => {};
+  const placeOrderHandler = async () => {
+    try {
+      rdcDispatch({ type: 'CREATE_REQUEST' });
+
+      const { data } = await axios.post(
+        '/api/orders',
+        {
+          orderItems: cart.cartItems,
+          shippingAddress: cart.shippingAddress,
+          paymentMethod: cart.paymentMethod,
+          itemsPrice: cart.itemsPrice,
+          shippingPrice: cart.shippingPrice,
+          taxPrice: cart.taxPrice,
+          totalPrice: cart.totalPrice,
+        },
+        {
+          headers: {
+            authorization: `Bearer ${userInfo?.token}`,
+          },
+        }
+      );
+      dispatch({ type: 'CART_CLEAR' });
+      rdcDispatch({ type: 'CREATE_SUCCESS' });
+      localStorage.removeItem('cartItems');
+      router.push(`/order/${data.order._id}`);
+    } catch (err) {
+      rdcDispatch({ type: 'CREATE_FAIL' });
+      toast.error(getError(err));
+    }
+  };
 
   useEffect(() => {
     if (!cart.paymentMethod) {
@@ -107,6 +166,12 @@ export default function OrderPreview() {
                   <Row>
                     <Col>Shipping</Col>
                     <Col>${cart.shippingPrice.toFixed(2)}</Col>
+                    <Row>
+                      <p className="text-[.75rem] text-gray-500">
+                        {' '}
+                        Shipping free for all purchases over $100
+                      </p>
+                    </Row>
                   </Row>
                 </ListGroupItem>
                 <ListGroupItem>
@@ -135,6 +200,7 @@ export default function OrderPreview() {
                       Place Order
                     </Button>
                   </div>
+                  {loading && <LoadingSpinner />}
                 </ListGroupItem>
               </ListGroup>
             </CardBody>

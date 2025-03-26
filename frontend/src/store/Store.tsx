@@ -55,8 +55,8 @@ export type ActionType =
   | { type: 'USER_SIGNIN'; payload: UserInfo }
   | { type: 'USER_SIGNOUT' }
   | { type: 'SAVE_SHIPPING_ADDRESS'; payload: ShippingAddress }
-  | { type: 'SAVE_PAYMENT_METHOD'; payload: string };
-// | { type: 'CART_RESET' }
+  | { type: 'SAVE_PAYMENT_METHOD'; payload: string }
+  | { type: 'CART_CLEAR' };
 
 const initialState: StateType = {
   cart: {
@@ -110,7 +110,6 @@ export function reducer(state: StateType, action: ActionType): StateType {
     }
     case 'USER_SIGNOUT': {
       Cookies.remove('userInfo');
-      // Cookies.set('userInfo', JSON.stringify(null));
       Cookies.remove('cartItems');
       return {
         ...state,
@@ -130,8 +129,9 @@ export function reducer(state: StateType, action: ActionType): StateType {
         ...state,
         cart: { ...state.cart, paymentMethod: action.payload },
       };
-    // case 'CART_RESET':
-    //   return initialState;
+    case 'CART_CLEAR':
+      Cookies.remove('cartItems');
+      return { ...state, cart: { ...state.cart, cartItems: [] } };
     default:
       return state;
   }
