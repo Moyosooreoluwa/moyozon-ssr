@@ -31,6 +31,10 @@ export interface Cart {
   cartItems: CartItem[];
   shippingAddress: ShippingAddress;
   paymentMethod: string;
+  itemsPrice?: number; // Optional, as it's calculated
+  shippingPrice?: number; // Optional, as it's calculated
+  taxPrice?: number; // Optional, as it's calculated
+  totalPrice?: number; // Optional, as it's calculated
 }
 
 export interface UserInfo {
