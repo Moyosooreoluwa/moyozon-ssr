@@ -11,7 +11,7 @@ import {
 } from 'react-bootstrap';
 
 export default function ShippingAddressForm() {
-  const { state, dispatch: dispatch } = useContext(StoreContext);
+  const { state, dispatch } = useContext(StoreContext);
   const {
     userInfo,
     cart: { shippingAddress },
