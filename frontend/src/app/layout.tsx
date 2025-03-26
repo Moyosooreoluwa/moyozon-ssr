@@ -4,8 +4,12 @@ import './globals.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 import NavigationBar from '@/components/NavigationBar';
-import { getInitialCartFromCookies } from '@/utils/getCartFromCookies';
+import {
+  getInitialCartFromCookies,
+  getUserInfoFromCookies,
+} from '@/utils/getItemsFromCookies';
 import { StoreProvider } from '@/store/Store';
+import { ToastContainer } from 'react-toastify';
 
 const montserrat = Montserrat({
   weight: ['400', '500', '700'],
@@ -28,15 +32,16 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const initialCart = await getInitialCartFromCookies();
-  console.log(initialCart);
+  const userInfo = await getUserInfoFromCookies();
 
   return (
     <html lang="en" className={`${montserrat.className} ${roboto.className}`}>
       <body className={` bg-gray-100  min-h-screen`}>
-        <StoreProvider initialCart={initialCart}>
+        <StoreProvider initialCart={initialCart} userInfo={userInfo}>
           {' '}
           <NavigationBar />
           {children}
+          <ToastContainer position="bottom-center" limit={1} />
           <footer className="text-center">Moyo 2025</footer>
         </StoreProvider>
       </body>

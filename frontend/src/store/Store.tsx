@@ -33,13 +33,23 @@ export interface Cart {
   paymentMethod: string;
 }
 
+export interface UserInfo {
+  _id: string;
+  name: string;
+  email: string;
+  isAdmin: boolean;
+  token: string;
+}
 interface StateType {
   cart: Cart;
+  userInfo: UserInfo | null;
 }
 
 export type ActionType =
   | { type: 'CART_ADD_ITEM'; payload: CartItem }
-  | { type: 'CART_REMOVE_ITEM'; payload: CartItem };
+  | { type: 'CART_REMOVE_ITEM'; payload: CartItem }
+  | { type: 'USER_SIGNIN'; payload: UserInfo }
+  | { type: 'USER_SIGNOUT' };
 // | { type: 'CART_RESET' }
 // | { type: 'CART_SET_PAYMENT'; payload: string }
 // | { type: 'CART_SET_SHIPPING'; payload: ShippingAddress };
@@ -50,6 +60,7 @@ const initialState: StateType = {
     shippingAddress: {},
     paymentMethod: '',
   },
+  userInfo: null,
 };
 
 export const StoreContext = createContext<{
@@ -89,6 +100,20 @@ export function reducer(state: StateType, action: ActionType): StateType {
       Cookies.set('cartItems', JSON.stringify(cartItems));
       return { ...state, cart: { ...state.cart, cartItems } };
     }
+    case 'USER_SIGNIN': {
+      Cookies.set('userInfo', JSON.stringify(action.payload));
+      return { ...state, userInfo: action.payload };
+    }
+    case 'USER_SIGNOUT': {
+      Cookies.remove('userInfo');
+      // Cookies.set('userInfo', JSON.stringify(null));
+      Cookies.remove('cartItems');
+      return {
+        ...state,
+        userInfo: null,
+        cart: { ...state.cart, cartItems: [] }, //  clear cart
+      };
+    }
     // case 'CART_SET_PAYMENT':
     //   return {
     //     ...state,
@@ -109,11 +134,16 @@ export function reducer(state: StateType, action: ActionType): StateType {
 export const StoreProvider = ({
   children,
   initialCart,
+  userInfo,
 }: {
   children: ReactNode;
   initialCart: Cart;
+  userInfo: UserInfo;
 }) => {
-  const [state, dispatch] = useReducer(reducer, { cart: initialCart });
+  const [state, dispatch] = useReducer(reducer, {
+    cart: initialCart,
+    userInfo,
+  });
 
   return (
     <StoreContext.Provider value={{ state, dispatch }}>

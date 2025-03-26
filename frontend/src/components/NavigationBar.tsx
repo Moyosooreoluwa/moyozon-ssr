@@ -2,6 +2,7 @@
 
 import { StoreContext } from '@/store/Store';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import React, { useContext, useState } from 'react';
 import {
   Badge,
@@ -12,15 +13,23 @@ import {
   NavbarBrand,
   NavbarCollapse,
   NavbarToggle,
+  NavDropdown,
   NavLink,
 } from 'react-bootstrap';
 import { GiHamburgerMenu } from 'react-icons/gi';
 
 const NavigationBar = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const { state } = useContext(StoreContext);
-  const { cart } = state;
-  console.log('cart: ', cart);
+  const { state, dispatch } = useContext(StoreContext);
+  const { cart, userInfo } = state;
+  const router = useRouter();
+  console.log(userInfo);
+
+  const signoutHandler = () => {
+    dispatch({ type: 'USER_SIGNOUT' });
+    router.push('/signin');
+    router.replace('/signin');
+  };
 
   return (
     <>
@@ -51,30 +60,30 @@ const NavigationBar = () => {
                     </Badge>
                   )}
                 </Link>
-                {/* {userInfo && (
-                    <NavDropdown title={userInfo.name} id="basic-nav-dropdown">
-                      <Nav.Link to="/profile">
-                        <NavDropdown.Item>User Profile</NavDropdown.Item>
-                      </Nav.Link>
-                      <Nav.Link to="/orderhistory">
-                        <NavDropdown.Item>Order History</NavDropdown.Item>
-                      </Nav.Link>
-                      <NavDropdown.Divider />
-                      <Link
-                        className="dropdown-item"
-                        to="#signout"
-                        onClick={signoutHandler}
-                      >
-                        Sign Out
-                      </Link>
-                    </NavDropdown>
-                  )}
-                  {!userInfo && (
-                    <Link className="nav-link" to="/signin">
-                      Sign In
+                {userInfo && (
+                  <NavDropdown title={userInfo.name} id="basic-nav-dropdown">
+                    {/* <Nav.Link href="/profile"> */}
+                    <NavDropdown.Item>User Profile</NavDropdown.Item>
+                    {/* </Nav.Link> */}
+                    {/* <Nav.Link href="/orderhistory"> */}
+                    <NavDropdown.Item>Order History</NavDropdown.Item>
+                    {/* </Nav.Link> */}
+                    <NavDropdown.Divider />
+                    <Link
+                      className="dropdown-item"
+                      href="#signout"
+                      onClick={signoutHandler}
+                    >
+                      Sign Out
                     </Link>
-                  )}
-                  {userInfo && userInfo.isAdmin && (
+                  </NavDropdown>
+                )}
+                {!userInfo && (
+                  <Link className="nav-link" href="/signin">
+                    Sign In
+                  </Link>
+                )}
+                {/* {userInfo && userInfo.isAdmin && (
                     <NavDropdown title="Admin" id="admin-nav-dropdown">
                       <Nav.Link to="/admin/dashboard">
                         <NavDropdown.Item>Dashboard</NavDropdown.Item>

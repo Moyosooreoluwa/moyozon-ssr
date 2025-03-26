@@ -14,3 +14,13 @@ export async function getInitialCartFromCookies() {
     paymentMethod: paymentMethod ? paymentMethod.value : '',
   };
 }
+
+export async function getUserInfoFromCookies() {
+  const cookieStore = await cookies();
+  const userInfo = cookieStore.get('userInfo');
+  const value = userInfo ? JSON.parse(userInfo.value) : {};
+
+  return {
+    ...value,
+  };
+}
