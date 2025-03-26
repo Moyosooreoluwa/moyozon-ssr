@@ -49,10 +49,10 @@ export type ActionType =
   | { type: 'CART_ADD_ITEM'; payload: CartItem }
   | { type: 'CART_REMOVE_ITEM'; payload: CartItem }
   | { type: 'USER_SIGNIN'; payload: UserInfo }
-  | { type: 'USER_SIGNOUT' };
+  | { type: 'USER_SIGNOUT' }
+  | { type: 'SAVE_SHIPPING_ADDRESS'; payload: ShippingAddress };
 // | { type: 'CART_RESET' }
 // | { type: 'CART_SET_PAYMENT'; payload: string }
-// | { type: 'CART_SET_SHIPPING'; payload: ShippingAddress };
 
 const initialState: StateType = {
   cart: {
@@ -114,15 +114,16 @@ export function reducer(state: StateType, action: ActionType): StateType {
         cart: { ...state.cart, cartItems: [] }, //  clear cart
       };
     }
+    case 'SAVE_SHIPPING_ADDRESS':
+      Cookies.set('shippingAddress', JSON.stringify(action.payload));
+      return {
+        ...state,
+        cart: { ...state.cart, shippingAddress: action.payload },
+      };
     // case 'CART_SET_PAYMENT':
     //   return {
     //     ...state,
     //     cart: { ...state.cart, paymentMethod: action.payload },
-    //   };
-    // case 'CART_SET_SHIPPING':
-    //   return {
-    //     ...state,
-    //     cart: { ...state.cart, shippingAddress: action.payload },
     //   };
     // case 'CART_RESET':
     //   return initialState;

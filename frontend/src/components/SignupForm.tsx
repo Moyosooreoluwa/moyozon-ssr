@@ -24,14 +24,14 @@ export default function SignupForm() {
           <FormLabel>Password</FormLabel>
           <FormControl type="password" required />
         </FormGroup>
-        <Form.Group className="mb-3" controlId="confirmPassword">
-          <Form.Label>Confirm Password</Form.Label>
-          <Form.Control
+        <FormGroup className="mb-3" controlId="confirmPassword">
+          <FormLabel>Confirm Password</FormLabel>
+          <FormControl
             type="password"
             required
             // onChange={(e) => setConfirmPassword(e.target.value)}
           />
-        </Form.Group>
+        </FormGroup>
         <div className="'mb-3">
           <Button type="submit">Sign Up</Button>
         </div>
