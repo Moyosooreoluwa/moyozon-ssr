@@ -17,7 +17,7 @@ const data = {
   ],
   products: [
     {
-      _id: '1',
+      // _id: '1',
       name: 'Apple Airpods Pro 2nd Generaton',
       slug: 'apple-airpods-pro-2ndgen',
       category: 'Headphones and Earphones',
@@ -30,7 +30,7 @@ const data = {
       description: 'Noise cancelling bluetooth earphones.',
     },
     {
-      _id: '2',
+      // _id: '2',
       name: 'JBL Tune 660C Headphones',
       slug: 'jbl-tune-660c',
       category: 'Headphones and Earphones',
@@ -44,7 +44,7 @@ const data = {
         'Wireless over-ear bluetooth earphones with active noise cancellation.',
     },
     {
-      _id: '3',
+      // _id: '3',
       name: 'Samsung Galaxy S25 Ultra',
       slug: 'samsung-s25-ultra',
       category: 'Mobile Phones',
@@ -58,7 +58,7 @@ const data = {
         'Ultra Modern with a built-in S Pen, Nightography camera and a battery that goes way beyond all day.',
     },
     {
-      _id: '4',
+      // _id: '4',
       name: 'Samsung Galaxy Z Fold6',
       slug: 'samsung-z-fold6',
       category: 'Mobile Phones',
@@ -72,7 +72,7 @@ const data = {
         'Put PC-like power in your pocket, Galaxy Z Fold6. More powerful than ever with its super-slim, productive screen. Now super-charged with Galaxy AI on foldables.',
     },
     {
-      _id: '5',
+      // _id: '5',
       name: 'Apple iPhone 16 pro max (1TB)',
       slug: 'apple-iphone-16pro-max-1tb',
       category: 'Mobile Phones',
@@ -85,7 +85,7 @@ const data = {
       description: 'The ultimate iPhone.{bbbbbb}',
     },
     {
-      _id: '6',
+      // _id: '6',
       name: 'Apple iPhone 16e (1TB)',
       slug: 'apple-iphone-16e-1tb',
       category: 'Mobile Phones',

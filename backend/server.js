@@ -2,11 +2,23 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import data from './data.js';
+import mongoose from 'mongoose';
+import seedRouter from './routes/seedRoutes.js';
+import productRouter from './routes/productRoutes.js';
 
 // Load environment variables
 dotenv.config();
 
 const app = express();
+
+mongoose
+  .connect(process.env.MONGODB_URI)
+  .then(() => {
+    console.log('Connected to MongoDB');
+  })
+  .catch((err) => {
+    console.error(err.message);
+  });
 
 // Middleware
 app.use(
@@ -17,28 +29,8 @@ app.use(
 );
 app.use(express.json()); // For parsing application/json
 
-// Sample route (you can replace this with your real data later)
-app.get('/api/products', (req, res) => {
-  res.send(data.products);
-});
-
-app.get('/api/products/slug/:slug', (req, res) => {
-  const product = data.products.find((x) => x.slug === req.params.slug);
-  if (product) {
-    res.send(product);
-  } else {
-    res.status(404).send({ message: 'Product Not Found' });
-  }
-});
-
-app.get('/api/products/:id', (req, res) => {
-  const product = data.products.find((x) => x._id === req.params.id);
-  if (product) {
-    res.send(product);
-  } else {
-    res.status(404).send({ message: 'Product Not Found' });
-  }
-});
+app.use('/api/seed', seedRouter);
+app.use('/api/products', productRouter);
 
 // Start the server
 const PORT = process.env.PORT || 5000;
