@@ -18,6 +18,9 @@ import {
 } from 'react-bootstrap';
 import Link from 'next/link';
 import Image from 'next/image';
+import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
+import { toast } from 'react-toastify';
+import { convertToDDMMYYYY } from '@/utils/changeDateFormat';
 
 type Props = {
   id: string;
@@ -117,7 +120,6 @@ export default function OrderSummary({ id }: Props) {
   const orderId = id;
   const { state } = useContext(StoreContext);
   const { userInfo } = state;
-
   const router = useRouter();
 
   const [{ loading, error, order }, dispatch] = useReducer(reducer, {
@@ -146,6 +148,63 @@ export default function OrderSummary({ id }: Props) {
     }
   }, [order._id, orderId, router, userInfo]);
 
+  const createOrder = (data: unknown, actions: any) => {
+    return actions.order.create({
+      purchase_units: [
+        {
+          amount: {
+            value: order.totalPrice.toFixed(2), // Use the total price from the order
+            currency_code: 'USD', // Adjust currency as needed
+          },
+        },
+      ],
+    });
+  };
+
+  const onApprove = async (data: unknown, actions: any) => {
+    const payment = await actions.order.capture();
+    try {
+      // Update the order on your backend to mark it as paid
+      await axios.put(
+        `/api/orders/${order._id}/pay`,
+        {
+          id: payment.id,
+          status: payment.status,
+          update_time: payment.update_time,
+          email_address: payment.payer.email_address,
+        },
+        {
+          headers: { authorization: `Bearer ${userInfo?.token}` },
+        }
+      );
+      dispatch({
+        type: 'FETCH_SUCCESS',
+        payload: {
+          ...order,
+          isPaid: true,
+          paidAt: new Date().toISOString(),
+          paymentResult: {
+            id: payment.id,
+            status: payment.status,
+            update_time: payment.update_time,
+            email_address: payment.payer.email_address,
+          },
+        },
+      });
+      toast.success('Payment successful!');
+    } catch (err) {
+      toast.error(getError(err));
+    }
+    // actions.close();
+  };
+  const onError = (err: unknown) => {
+    toast.error(getError(err));
+  };
+
+  const onCancel = () => {
+    toast.error('Payment cancelled.');
+  };
+
   return loading ? (
     <LoadingSpinner />
   ) : error ? (
@@ -164,7 +223,7 @@ export default function OrderSummary({ id }: Props) {
             </CardText>
             {order.isDelivered ? (
               <MessageBox variant="success">
-                Delivered at {order.deliveredAt}
+                Delivered on {convertToDDMMYYYY(order.deliveredAt?.toString())}
               </MessageBox>
             ) : (
               <MessageBox variant="danger">Not Delivered</MessageBox>
@@ -178,7 +237,9 @@ export default function OrderSummary({ id }: Props) {
               <strong>Method:</strong> {order.paymentMethod}
             </CardText>
             {order.isPaid ? (
-              <MessageBox variant="success">Paid at {order.paidAt}</MessageBox>
+              <MessageBox variant="success">
+                Paid on {convertToDDMMYYYY(order.paidAt?.toString())}
+              </MessageBox>
             ) : (
               <MessageBox variant="danger">Not Paid</MessageBox>
             )}
@@ -217,42 +278,68 @@ export default function OrderSummary({ id }: Props) {
         <Card className="mb-3">
           <CardBody>
             <Card.Title>Order Summary</Card.Title>
-            <ListGroup variant="flush">
-              <ListGroupItem>
-                <Row>
-                  <Col>Items</Col>
-                  <Col>${order.itemsPrice.toFixed(2)}</Col>
-                </Row>
-              </ListGroupItem>
-              <ListGroupItem>
-                <Row>
-                  <Col>Shipping</Col>
-                  <Col>${order.shippingPrice.toFixed(2)}</Col>
+            <PayPalScriptProvider
+              options={{
+                clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID!,
+                currency: 'USD',
+              }}
+              //   deferLoading={true}
+            >
+              <ListGroup variant="flush">
+                <ListGroupItem>
                   <Row>
-                    <p className="text-[.75rem] text-gray-500">
-                      {' '}
-                      Shipping free for all purchases over $100
-                    </p>
+                    <Col>Items</Col>
+                    <Col>${order.itemsPrice.toFixed(2)}</Col>
                   </Row>
-                </Row>
-              </ListGroupItem>
-              <ListGroupItem>
-                <Row>
-                  <Col>Tax</Col>
-                  <Col>${order.taxPrice.toFixed(2)}</Col>
-                </Row>
-              </ListGroupItem>
-              <ListGroupItem>
-                <Row>
-                  <Col>
-                    <strong> Order Total</strong>
-                  </Col>
-                  <Col>
-                    <strong>${order.totalPrice.toFixed(2)}</strong>
-                  </Col>
-                </Row>
-              </ListGroupItem>
-            </ListGroup>
+                </ListGroupItem>
+                <ListGroupItem>
+                  <Row>
+                    <Col>Shipping</Col>
+                    <Col>${order.shippingPrice.toFixed(2)}</Col>
+                    <Row>
+                      <p className="text-[.75rem] text-gray-500">
+                        {' '}
+                        Shipping free for all purchases over $100
+                      </p>
+                    </Row>
+                  </Row>
+                </ListGroupItem>
+                <ListGroupItem>
+                  <Row>
+                    <Col>Tax</Col>
+                    <Col>${order.taxPrice.toFixed(2)}</Col>
+                  </Row>
+                </ListGroupItem>
+                <ListGroupItem>
+                  <Row>
+                    <Col>
+                      <strong> Order Total</strong>
+                    </Col>
+                    <Col>
+                      <strong>${order.totalPrice.toFixed(2)}</strong>
+                    </Col>
+                  </Row>
+                </ListGroupItem>
+                {!order.isPaid && (
+                  <ListGroupItem>
+                    <PayPalButtons
+                      style={{
+                        layout: 'vertical', // Stacked layout to fit within the ListGroupItem
+                        color: 'gold', // Blue button color
+                        shape: 'pill', // Rounded corners
+                        label: 'pay', // "Pay with PayPal" label
+                        height: 40, // Custom height
+                        tagline: false, // Hide the tagline
+                      }}
+                      createOrder={createOrder}
+                      onApprove={onApprove}
+                      onError={onError}
+                      onCancel={onCancel}
+                    />
+                  </ListGroupItem>
+                )}
+              </ListGroup>
+            </PayPalScriptProvider>
           </CardBody>
         </Card>
       </Col>
