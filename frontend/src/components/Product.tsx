@@ -22,41 +22,58 @@ type ProductProps = {
 
 const Product = ({ product }: ProductProps) => {
   return (
-    <Card style={{ height: '450px', display: 'flex', flexDirection: 'column' }}>
+    <Card
+      style={{
+        // height: '400px',
+        width: '250px',
+        display: 'flex',
+        flexDirection: 'column',
+        borderRadius: '0.5rem',
+        borderColor: 'transparent',
+      }}
+    >
       <Link href={`/product/${product.slug}`} passHref>
         <div style={{ position: 'relative', width: '100%', height: '250px' }}>
           <Image
             src={product.image}
             alt={product.name}
             fill
-            style={{ objectFit: 'cover' }}
+            style={{ objectFit: 'cover', borderRadius: '0.5rem' }}
           />
         </div>
       </Link>
 
-      <CardBody className="">
+      <CardBody style={{ padding: 0 }} className="">
         {/* <Card.Body className="d-flex flex-column"> */}
         <Link
           href={`/product/${product.slug}`}
           passHref
-          className="no-underline no-decoration"
+          className="no-underline no-decoration text-[#010101]"
         >
           <CardTitle
             style={{
-              minHeight: '48px',
-              maxHeight: '48px',
+              minHeight: '38px',
+              maxHeight: '38px',
               overflow: 'hidden',
               textOverflow: 'ellipsis',
               display: '-webkit-box',
               WebkitLineClamp: 2,
               WebkitBoxOrient: 'vertical',
+              fontSize: '1rem',
+              color: '#010101',
+              marginTop: '0.5rem',
             }}
           >
             {product.name}
           </CardTitle>
         </Link>
+        <CardText
+          style={{ fontSize: '0.75rem', fontWeight: 'bold', margin: 0 }}
+          className=""
+        >
+          ${product.price.toFixed(2)}
+        </CardText>
         <Rating rating={product.rating} reviewCount={product.reviewCount} />
-        <CardText className="">${product.price.toFixed(2)}</CardText>
         <AddToCartButton product={product} />
       </CardBody>
     </Card>

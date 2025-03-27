@@ -15,8 +15,8 @@ const CheckoutSteps: React.FC<CheckoutStepsProps> = (props) => {
       <Col
         className={`pb-2 ${
           props.step1
-            ? 'text-green-600 border-b-2 border-green-600'
-            : 'text-gray-500 border-b-2 border-gray-500'
+            ? 'text-[#edcf5d] border-b-2 border-[#edcf5d]'
+            : 'text-[#edcf5d] border-b-2 border-[#edcf5d]'
         }`}
       >
         Sign-In
@@ -24,8 +24,8 @@ const CheckoutSteps: React.FC<CheckoutStepsProps> = (props) => {
       <Col
         className={`pb-2 ${
           props.step2
-            ? 'text-green-600 border-b-2 border-green-600'
-            : 'text-gray-500 border-b-2 border-gray-500'
+            ? 'text-[#edcf5d] border-b-2 border-[#edcf5d]'
+            : 'text-[#a4a4a4] border-b-2 border-[#a4a4a4]'
         }`}
       >
         Shipping
@@ -33,8 +33,8 @@ const CheckoutSteps: React.FC<CheckoutStepsProps> = (props) => {
       <Col
         className={`pb-2 ${
           props.step3
-            ? 'text-green-600 border-b-2 border-green-600'
-            : 'text-gray-500 border-b-2 border-gray-500'
+            ? 'text-[#edcf5d] border-b-2 border-[#edcf5d]'
+            : 'text-[#a4a4a4] border-b-2 border-[#a4a4a4]'
         }`}
       >
         Payment
@@ -43,7 +43,7 @@ const CheckoutSteps: React.FC<CheckoutStepsProps> = (props) => {
         className={`pb-2 ${
           props.step4
             ? 'text-green-600 border-b-2 border-green-600'
-            : 'text-gray-500 border-b-2 border-gray-500'
+            : 'text-[#a4a4a4] border-b-2 border-[#a4a4a4]'
         }`}
       >
         Place Order

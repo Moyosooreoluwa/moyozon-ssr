@@ -134,10 +134,16 @@ export default function OrderPreview() {
                           src={item.image}
                           alt={item.name}
                           className="img-fluid rounded img-thumbnail"
-                          width={100}
-                          height={100}
+                          width={50}
+                          height={50}
                         />{' '}
-                        <Link href={`/product/${item.slug}`}>{item.name}</Link>
+                        <Link
+                          className="no-decoration text-sm"
+                          href={`/product/${item.slug}`}
+                          style={{ color: '#010101' }}
+                        >
+                          {item.name}
+                        </Link>{' '}
                       </Col>
                       <Col md={3}>
                         <span>{item.quantity}</span>
@@ -167,7 +173,7 @@ export default function OrderPreview() {
                     <Col>Shipping</Col>
                     <Col>${cart.shippingPrice.toFixed(2)}</Col>
                     <Row>
-                      <p className="text-[.75rem] text-gray-500">
+                      <p className="text-[.75rem] text-[#a4a4a4]">
                         {' '}
                         Shipping free for all purchases over $100
                       </p>

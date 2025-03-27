@@ -13,6 +13,7 @@ import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
+import { FaCalendarDays, FaTruckMoving } from 'react-icons/fa6';
 
 interface Product {
   _id: string;
@@ -91,58 +92,76 @@ export default async function ProductPage({
               src={product.image}
               alt={product.name}
               width={400}
-              height={600}
+              height={400}
               className="m-auto"
             />
           </Col>
-          <Col md={3}>
+          <Col md={4}>
             <ListGroup variant="flush">
               <ListGroupItem>
                 <h1>{product.name}</h1>
+                <Col className="text-[#a4a4a4]">{product.brand}</Col>
               </ListGroupItem>
               <ListGroupItem>
+                <p>{product.description}</p>
                 <Rating
                   rating={product.rating}
                   reviewCount={product.reviewCount}
                 />
               </ListGroupItem>
-              <ListGroupItem>Brand : {product.brand}</ListGroupItem>
-              <ListGroupItem>
-                <p>{product.description}</p>
+
+              <ListGroupItem className="text-center text-xl font-bold">
+                ${product.price.toFixed(2)}
               </ListGroupItem>
+              <ListGroupItem>
+                <Row>
+                  <div className="text-center">
+                    {product.stockCount > 0 ? (
+                      <h4>
+                        <Badge bg="success">Available</Badge>
+                      </h4>
+                    ) : (
+                      <h4>
+                        <Badge bg="danger">Unavailable</Badge>
+                      </h4>
+                    )}
+                  </div>
+                </Row>
+              </ListGroupItem>
+
+              {product.stockCount > 0 && (
+                <ListGroupItem>
+                  <div className="d-grid">
+                    {/* <Button variant="primary">Add to Cart</Button> */}
+                    <AddToCartButton product={product} />
+                  </div>
+                </ListGroupItem>
+              )}
             </ListGroup>
-          </Col>
-          <Col md={3}>
+
             <Card>
               <CardBody>
                 <ListGroup variant="flush">
                   <ListGroupItem>
-                    <Row>
-                      <Col>Price:</Col>
-                      <Col>${product.price.toFixed(2)}</Col>
-                    </Row>
+                    <div className="flex">
+                      <FaTruckMoving className="text-[#edcf5d] mt-1 mx-1" />
+                      Free Delivery
+                    </div>
+                    <span className="text-[#a4a4a4] text-[.75rem]">
+                      {' '}
+                      Free Delivery for all orders over $100.
+                    </span>
                   </ListGroupItem>
                   <ListGroupItem>
-                    <Row>
-                      <Col>Status:</Col>
-                      <Col>
-                        {product.stockCount > 0 ? (
-                          <Badge bg="success">Available</Badge>
-                        ) : (
-                          <Badge bg="danger">Unavailable</Badge>
-                        )}
-                      </Col>
-                    </Row>
+                    <div className="flex">
+                      <FaCalendarDays className="text-[#edcf5d] mx-1 mt-1" />
+                      Free Returns
+                    </div>
+                    <span className="text-[#a4a4a4] text-[.75rem]">
+                      {' '}
+                      Free 30-day Delivery returns.
+                    </span>
                   </ListGroupItem>
-
-                  {product.stockCount > 0 && (
-                    <ListGroupItem>
-                      <div className="d-grid">
-                        {/* <Button variant="primary">Add to Cart</Button> */}
-                        <AddToCartButton product={product} />
-                      </div>
-                    </ListGroupItem>
-                  )}
                 </ListGroup>
               </CardBody>
             </Card>

@@ -41,19 +41,24 @@ const NavigationBar = () => {
               <GiHamburgerMenu />
             </Button>
             <NavbarBrand className="mx-4">
-              <NavLink href="/" className="no-underline text-black">
-                Moyozon
+              <NavLink href="/" className="no-underline text-black font-bold">
+                <h3> Moyozon</h3>
               </NavLink>
             </NavbarBrand>
 
             <NavbarToggle aria-controls="basic-navbar-nav" />
-            <NavbarCollapse id="basic-navbar-nav">
+            <NavbarCollapse id="basic-navbar-nav" className="mr-6">
               {/* <SearchBox /> */}
               <Nav className="me-auto w-100 justify-content-end">
                 <Link href="/cart" className="nav-link">
                   Cart
                   {cart?.cartItems?.length > 0 && (
-                    <Badge pill bg="danger">
+                    <Badge
+                      pill
+                      bg="#edcf5d"
+                      style={{ backgroundColor: '#edcf5d' }}
+                      text="dark"
+                    >
                       {cart?.cartItems?.reduce((a, c) => a + c.quantity, 0)}
                     </Badge>
                   )}

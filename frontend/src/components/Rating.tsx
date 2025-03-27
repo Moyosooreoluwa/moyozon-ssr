@@ -9,7 +9,7 @@ interface RatingProps {
 const Rating: React.FC<RatingProps> = ({ rating, reviewCount }) => {
   return (
     <>
-      <div className="rating flex mx-1">
+      <div className="rating flex ">
         {[1, 2, 3, 4, 5].map((star) => (
           <span key={star}>
             {/* <i
@@ -22,15 +22,18 @@ const Rating: React.FC<RatingProps> = ({ rating, reviewCount }) => {
           }
         /> */}
             {rating >= star ? (
-              <FaStar className="text-yellow-600" />
+              <FaStar className="text-[#edcf5d]" />
             ) : rating >= star - 0.5 ? (
-              <FaStarHalfStroke className="text-yellow-600" />
+              <FaStarHalfStroke className="text-[#edcf5d]" />
             ) : (
-              <FaRegStar className="text-yellow-600" />
+              <FaRegStar className="text-[#edcf5d]" />
             )}
           </span>
         ))}
-        <span className="mb-2 ml-1 text-[.75rem]"> ({reviewCount})</span>
+        <span className="mb-2 ml-1 text-[.8rem] text-[#a4a4a4]">
+          {' '}
+          ({reviewCount})
+        </span>
       </div>
     </>
   );

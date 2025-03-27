@@ -61,7 +61,7 @@ export default function CartSummary() {
             Cart is Empty <Link href={'/'}>Go Shopping</Link>
           </MessageBox>
         ) : (
-          <ListGroup>
+          <ListGroup variant="flush">
             {cart.cartItems.map((item) => (
               <ListGroupItem key={item._id}>
                 <Row className="items-center">
@@ -69,12 +69,13 @@ export default function CartSummary() {
                     <Image
                       src={item.image}
                       alt={item.name}
-                      width={100}
-                      height={100}
+                      width={50}
+                      height={50}
                     />
                     <Link
-                      className="no-decoration"
+                      className="no-decoration text-sm"
                       href={`/product/${item.slug}`}
+                      style={{ color: '#010101' }}
                     >
                       {item.name}
                     </Link>
@@ -124,18 +125,20 @@ export default function CartSummary() {
                     .toFixed(2)}
                 </h3>
               </ListGroupItem>
-              <ListGroupItem>
-                <div className="">
-                  <Button
-                    type="button"
-                    variant="primary"
-                    disabled={cart.cartItems.length === 0}
-                    onClick={() => router.push('/shipping')}
-                  >
-                    Proceed to Checkout
-                  </Button>
-                </div>
-              </ListGroupItem>
+              {cart.cartItems.length > 0 && (
+                <ListGroupItem>
+                  <div className="">
+                    <Button
+                      type="button"
+                      variant="outline-primary"
+                      disabled={cart.cartItems.length === 0}
+                      onClick={() => router.push('/shipping')}
+                    >
+                      Proceed to Checkout
+                    </Button>
+                  </div>
+                </ListGroupItem>
+              )}
             </ListGroup>
           </CardBody>
         </Card>

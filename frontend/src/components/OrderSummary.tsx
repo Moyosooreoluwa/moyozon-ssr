@@ -347,11 +347,17 @@ export default function OrderSummary({ id }: Props) {
                       <Image
                         src={item.image}
                         alt={item.name}
-                        width={100}
-                        height={100}
+                        width={50}
+                        height={50}
                         className="img-fluid rounded img-thumbnail"
                       />{' '}
-                      <Link href={`/product/${item.slug}`}>{item.name}</Link>
+                      <Link
+                        className="no-decoration text-sm"
+                        href={`/product/${item.slug}`}
+                        style={{ color: '#010101' }}
+                      >
+                        {item.name}
+                      </Link>
                     </Col>
                     <Col md={3}>
                       <span>{item.quantity}</span>
@@ -387,7 +393,7 @@ export default function OrderSummary({ id }: Props) {
                     <Col>Shipping</Col>
                     <Col>${order.shippingPrice.toFixed(2)}</Col>
                     <Row>
-                      <p className="text-[.75rem] text-gray-500">
+                      <p className="text-[.75rem] text-[#a4a4a4]">
                         {' '}
                         Shipping free for all purchases over $100
                       </p>

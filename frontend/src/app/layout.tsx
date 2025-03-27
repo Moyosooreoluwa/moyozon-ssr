@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Montserrat, Roboto } from 'next/font/google';
+import { Raleway } from 'next/font/google';
 import './globals.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
@@ -11,14 +11,10 @@ import {
 import { StoreProvider } from '@/store/Store';
 import { ToastContainer } from 'react-toastify';
 
-const montserrat = Montserrat({
+const raleway = Raleway({
   weight: ['400', '500', '700'],
   subsets: ['latin'],
-});
-
-const roboto = Roboto({
-  weight: ['400', '500', '700'],
-  subsets: ['latin'],
+  variable: '--font-raleway', // Optional: Add a CSS variable name
 });
 
 export const metadata: Metadata = {
@@ -35,14 +31,16 @@ export default async function RootLayout({
   const userInfo = await getUserInfoFromCookies();
 
   return (
-    <html lang="en" className={`${montserrat.className} ${roboto.className}`}>
-      <body className={` bg-gray-100  min-h-screen`}>
+    <html lang="en" className={raleway.variable}>
+      <body
+        className={`${raleway.className} bg-gray-100  min-h-screen w-screen`}
+      >
         <StoreProvider initialCart={initialCart} userInfo={userInfo}>
           {' '}
           <NavigationBar />
           {children}
           <ToastContainer position="bottom-center" limit={1} />
-          <footer className="text-center">Moyo 2025</footer>
+          <footer className="text-center mt-5">Moyo 2025</footer>
         </StoreProvider>
       </body>
     </html>

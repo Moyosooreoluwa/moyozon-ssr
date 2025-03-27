@@ -33,8 +33,8 @@ export default async function HomePage() {
   const products = await getProducts();
 
   return (
-    <Container className="my-2">
-      <h1 className="my-2">Featured Products</h1>
+    <Container className="my-6">
+      <h1 className="my-6">Featured Products</h1>
       <div className="flex flex-wrap justify-center my-2">
         {!products.length ? (
           <MessageBox variant="secondary">No Products Found</MessageBox>
