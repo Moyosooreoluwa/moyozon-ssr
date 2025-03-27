@@ -4,7 +4,7 @@ import axios from 'axios';
 import MessageBox from './MessageBox';
 import { useContext, useEffect, useReducer } from 'react';
 import { StoreContext } from '@/store/Store';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import LoadingSpinner from './LoadingSpinner';
 import {
   Card,
@@ -15,12 +15,14 @@ import {
   ListGroup,
   ListGroupItem,
   Row,
+  Button,
 } from 'react-bootstrap';
 import Link from 'next/link';
 import Image from 'next/image';
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 import { toast } from 'react-toastify';
 import { convertToDDMMYYYY } from '@/utils/changeDateFormat';
+import { loadStripe } from '@stripe/stripe-js';
 
 type Props = {
   id: string;
@@ -116,6 +118,12 @@ function reducer(state: State, action: Action) {
   }
 }
 
+const stripePromise = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+  ? loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY)
+  : loadStripe('');
+
+console.log(stripePromise);
+
 export default function OrderSummary({ id }: Props) {
   const orderId = id;
   const { state } = useContext(StoreContext);
@@ -127,6 +135,9 @@ export default function OrderSummary({ id }: Props) {
     order: initialOrder,
     error: '',
   });
+
+  const searchParams = useSearchParams();
+  const payment = searchParams.get('payment'); // Get the 'payment' query parameter
 
   useEffect(() => {
     const fetchOrder = async () => {
@@ -140,13 +151,53 @@ export default function OrderSummary({ id }: Props) {
         dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
       }
     };
+    const updateOrderStatus = async () => {
+      if (payment === 'success') {
+        try {
+          await axios.put(
+            `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/orders/${order._id}/pay`,
+            {
+              id: `stripe_${order._id}`,
+              status: 'COMPLETED',
+              update_time: new Date().toISOString(),
+              email_address: userInfo?.email || 'unknown',
+            },
+            {
+              headers: { authorization: `Bearer ${userInfo?.token}` },
+            }
+          );
+          dispatch({
+            type: 'FETCH_SUCCESS',
+            payload: {
+              ...order,
+              isPaid: true,
+              paidAt: new Date().toISOString(),
+              paymentResult: {
+                id: `stripe_${order._id}`,
+                status: 'COMPLETED',
+                update_time: new Date().toISOString(),
+                email_address: userInfo?.email || 'unknown',
+              },
+            },
+          });
+          //   toast.success('Payment successful via Stripe!');
+        } catch (err) {
+          toast.error(getError(err));
+        }
+      } else if (payment === 'canceled') {
+        toast.error('Payment cancelled via Stripe.');
+      }
+    };
     if (!userInfo) {
       router.push('/signin');
     }
     if (!order._id || (order._id && order._id !== orderId)) {
       fetchOrder();
     }
-  }, [order._id, orderId, router, userInfo]);
+    if (payment && order._id) {
+      updateOrderStatus();
+    }
+  }, [order, order._id, orderId, payment, router, userInfo]);
 
   const createOrder = (data: unknown, actions: any) => {
     return actions.order.create({
@@ -204,6 +255,45 @@ export default function OrderSummary({ id }: Props) {
   const onCancel = () => {
     toast.error('Payment cancelled.');
   };
+
+  const handleStripePayment = async () => {
+    try {
+      const stripe = await stripePromise;
+
+      if (!stripe) {
+        console.error('Stripe failed to initialize.');
+        toast.error('Stripe is not available.');
+        return;
+      }
+
+      console.log('Stripe initialized:', stripe);
+
+      const response = await axios.post(
+        `/api/orders/${order._id}/stripe-checkout`,
+        {},
+        {
+          headers: { authorization: `Bearer ${userInfo?.token}` },
+        }
+      );
+
+      const { url } = response.data;
+      if (url) {
+        window.location.href = url;
+      } else {
+        toast.error('Failed to create Stripe Checkout session.');
+      }
+    } catch (err) {
+      console.error('Error:', err);
+      toast.error(getError(err));
+    }
+  };
+
+  const paypalClientId = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID;
+  if (!paypalClientId) {
+    throw new Error(
+      'PayPal Client ID is missing. Please set NEXT_PUBLIC_PAYPAL_CLIENT_ID in your .env file.'
+    );
+  }
 
   return loading ? (
     <LoadingSpinner />
@@ -321,22 +411,44 @@ export default function OrderSummary({ id }: Props) {
                   </Row>
                 </ListGroupItem>
                 {!order.isPaid && (
-                  <ListGroupItem>
-                    <PayPalButtons
-                      style={{
-                        layout: 'vertical', // Stacked layout to fit within the ListGroupItem
-                        color: 'gold', // Blue button color
-                        shape: 'pill', // Rounded corners
-                        label: 'pay', // "Pay with PayPal" label
-                        height: 40, // Custom height
-                        tagline: false, // Hide the tagline
-                      }}
-                      createOrder={createOrder}
-                      onApprove={onApprove}
-                      onError={onError}
-                      onCancel={onCancel}
-                    />
-                  </ListGroupItem>
+                  <>
+                    {order.paymentMethod === 'PayPal' ? (
+                      <>
+                        <ListGroupItem>
+                          <PayPalButtons
+                            style={{
+                              layout: 'vertical', // Stacked layout to fit within the ListGroupItem
+                              color: 'gold', // Blue button color
+                              shape: 'pill', // Rounded corners
+                              label: 'pay', // "Pay with PayPal" label
+                              height: 40, // Custom height
+                              tagline: false, // Hide the tagline
+                            }}
+                            createOrder={createOrder}
+                            onApprove={onApprove}
+                            onError={onError}
+                            onCancel={onCancel}
+                          />
+                        </ListGroupItem>
+                      </>
+                    ) : (
+                      <>
+                        <ListGroupItem>
+                          <Button
+                            onClick={handleStripePayment}
+                            style={{
+                              width: '100%',
+                              backgroundColor: '#625AFA',
+                              color: 'white',
+                              borderRadius: '2rem',
+                            }}
+                          >
+                            Pay with <span className="font-black">Stripe</span>
+                          </Button>
+                        </ListGroupItem>
+                      </>
+                    )}
+                  </>
                 )}
               </ListGroup>
             </PayPalScriptProvider>
