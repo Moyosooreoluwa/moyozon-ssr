@@ -44,6 +44,22 @@ orderRouter.get(
     }
   })
 );
+orderRouter.get(
+  '/user/:id',
+  isAuth,
+  expressAsyncHandler(async (req, res) => {
+    const orders = await Order.find({ user: req.user._id });
+    res.send(orders);
+  })
+);
+// orderRouter.get(
+//   '/mine',
+//   isAuth,
+//   expressAsyncHandler(async (req, res) => {
+//     const orders = await Order.find({ user: req.user._id });
+//     res.send(orders);
+//   })
+// );
 
 orderRouter.put(
   '/:id/pay',
@@ -149,4 +165,19 @@ orderRouter.post(
 //     })
 //   );
 
+// orderRouter.get(
+//   '/mine',
+//   isAuth,
+//   expressAsyncHandler(async (req, res) => {
+//     console.log('User in /mine route:', req.user);
+//     try {
+//       const orders = await Order.find({ user: req.user._id });
+//       console.log('/mine: Found orders:', orders);
+//       res.send(orders);
+//     } catch (error) {
+//       console.error('/mine: Error fetching orders:', error);
+//       res.status(500).send({ message: 'Internal server error' });
+//     }
+//   })
+// );
 export default orderRouter;

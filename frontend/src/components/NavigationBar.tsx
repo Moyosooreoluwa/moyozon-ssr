@@ -65,12 +65,17 @@ const NavigationBar = () => {
                 </Link>
                 {userInfo && (
                   <NavDropdown title={userInfo.name} id="basic-nav-dropdown">
-                    {/* <Nav.Link href="/profile"> */}
                     <NavDropdown.Item>User Profile</NavDropdown.Item>
-                    {/* </Nav.Link> */}
-                    {/* <Nav.Link href="/orderhistory"> */}
-                    <NavDropdown.Item>Order History</NavDropdown.Item>
-                    {/* </Nav.Link> */}
+                    {/* <Link   style={{ textDecoration: 'none', color: 'initial' }} href="/profile"> */}
+                    <NavDropdown.Item href="/my-orders">
+                      {/* </Link> */}
+                      {/* <Link
+                        style={{ textDecoration: 'none', color: 'initial' }}
+                        href="/my-orders"
+                      > */}
+                      Order History
+                      {/* </Link> */}
+                    </NavDropdown.Item>
                     <NavDropdown.Divider />
                     <Link
                       className="dropdown-item"

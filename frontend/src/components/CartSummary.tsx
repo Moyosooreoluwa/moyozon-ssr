@@ -130,7 +130,7 @@ export default function CartSummary() {
                   <div className="">
                     <Button
                       type="button"
-                      variant="outline-primary"
+                      variant="primary"
                       disabled={cart.cartItems.length === 0}
                       onClick={() => router.push('/shipping')}
                     >
