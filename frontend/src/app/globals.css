@@ -3,7 +3,7 @@
 :root {
   --background: #f2f0ea;
   --foreground: #010101;
-  --font-raleway: ${raleway.variable}; /* Access the CSS variable */
+  /* --font-raleway: ${raleway.variable}; Access the CSS variable */
 }
 
 @theme inline {
@@ -28,8 +28,36 @@ body {
 }
 
 html {
-  font-family: var(--font-raleway), sans-serif;}
+  font-family: var(--font-raleway), sans-serif;
+}
 
 .no-decoration {
   text-decoration: none;
+}
+
+/* sidebar */
+.navbar-brand {
+  font-weight: bold;
+}
+
+.side-navbar {
+  width: 240px;
+  height: 100%;
+  position: absolute;
+  left: -300px;
+  background-color: #ededed;
+  transition: 0.5s;
+  z-index: 1000;
+}
+
+.site-container {
+  transition: 0.4s;
+}
+
+.active-cont {
+  margin-left: 240px;
+}
+
+.active-nav {
+  left: 0;
 }

@@ -100,7 +100,9 @@ export default async function ProductPage({
             <ListGroup variant="flush">
               <ListGroupItem>
                 <h1>{product.name}</h1>
-                <Col className="text-[#a4a4a4]">{product.brand}</Col>
+                <Col className="text-[#a4a4a4]">
+                  {product.brand} &#x2022; {product.category}
+                </Col>
               </ListGroupItem>
               <ListGroupItem>
                 <p>{product.description}</p>
