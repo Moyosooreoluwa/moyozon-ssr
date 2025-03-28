@@ -56,8 +56,8 @@ const getMyOrders = async (): Promise<Order[]> => {
     const userInfo = await getUserInfoFromCookies();
     console.log('gotten token: ', userInfo);
     const { data } = await axios.get(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/orders/user/${userInfo._id}`,
-      //   `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/orders/mine`,
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/orders/user/${userInfo._id}`,
+      //   `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/orders/mine`,
       {
         headers: { authorization: `Bearer ${userInfo?.token}` },
       }

@@ -75,7 +75,7 @@ export default async function ProductPage({
 
   try {
     const { data: product } = await axios.get<Product>(
-      `http://localhost:5000/api/products/slug/${slug}`
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/products/slug/${slug}`
     );
     if (!product) {
       return (

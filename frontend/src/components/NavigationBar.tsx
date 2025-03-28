@@ -65,7 +65,9 @@ const NavigationBar = () => {
                 </Link>
                 {userInfo && (
                   <NavDropdown title={userInfo.name} id="basic-nav-dropdown">
-                    <NavDropdown.Item>User Profile</NavDropdown.Item>
+                    <NavDropdown.Item href="profile">
+                      User Profile
+                    </NavDropdown.Item>
                     {/* <Link   style={{ textDecoration: 'none', color: 'initial' }} href="/profile"> */}
                     <NavDropdown.Item href="/my-orders">
                       {/* </Link> */}
