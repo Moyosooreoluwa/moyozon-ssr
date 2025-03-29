@@ -67,9 +67,11 @@ const Product = ({ product }: ProductProps) => {
             {product.name}
           </CardTitle>
         </Link>
+        <CardText style={{ fontSize: '0.7rem', margin: 0, color: '#a3a3a3' }}>
+          {product.brand}
+        </CardText>
         <CardText
           style={{ fontSize: '0.75rem', fontWeight: 'bold', margin: 0 }}
-          className=""
         >
           ${product.price.toFixed(2)}
         </CardText>
