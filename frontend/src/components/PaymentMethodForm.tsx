@@ -24,7 +24,7 @@ export default function PaymentMethodForm() {
   const submitHandler = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     dispatch({ type: 'SAVE_PAYMENT_METHOD', payload: paymentMethodName });
-    router.push('/placeorder');
+    router.push('/checkout');
   };
   return (
     <>
