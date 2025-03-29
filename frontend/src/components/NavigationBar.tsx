@@ -111,22 +111,22 @@ const NavigationBar = () => {
                       Sign In
                     </Link>
                   )}
-                  {/* {userInfo && userInfo.isAdmin && (
+                  {userInfo && userInfo.isAdmin && (
                     <NavDropdown title="Admin" id="admin-nav-dropdown">
-                      <Nav.Link to="/admin/dashboard">
-                        <NavDropdown.Item>Dashboard</NavDropdown.Item>
-                      </Nav.Link>
-                      <Nav.Link to="/admin/products">
-                        <NavDropdown.Item>Products</NavDropdown.Item>
-                      </Nav.Link>
-                      <Nav.Link to="/admin/orders">
-                        <NavDropdown.Item>Orders</NavDropdown.Item>
-                      </Nav.Link>
-                      <Nav.Link to="/admin/users">
-                        <NavDropdown.Item>Users</NavDropdown.Item>
-                      </Nav.Link>
+                      <NavDropdown.Item href="/admin/dashboard">
+                        Dashboard
+                      </NavDropdown.Item>
+                      <NavDropdown.Item href="/admin/products">
+                        Products
+                      </NavDropdown.Item>
+                      <NavDropdown.Item href="/admin/orders">
+                        Orders
+                      </NavDropdown.Item>
+                      <NavDropdown.Item href="/admin/users">
+                        Users
+                      </NavDropdown.Item>
                     </NavDropdown>
-                  )} */}
+                  )}
                 </Nav>
               </NavbarCollapse>
             </Container>

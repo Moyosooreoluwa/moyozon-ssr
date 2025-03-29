@@ -25,7 +25,12 @@ export function middleware(req: NextRequest) {
   const userInfo = req.cookies.get('userInfo')?.value;
 
   // 🔹 Protected user routes
-  if (pathname.startsWith('/profile') || pathname.startsWith('/my-orders')) {
+  if (
+    pathname.startsWith('/profile') ||
+    pathname.startsWith('/my-orders') ||
+    pathname.startsWith('/checkout') ||
+    pathname.startsWith('/order')
+  ) {
     if (!userInfo) {
       return NextResponse.redirect(new URL('/signin', req.url));
     }
@@ -47,5 +52,5 @@ export function middleware(req: NextRequest) {
   return NextResponse.next(); // Allow access
 }
 export const config = {
-  matcher: ['/profile', '/my-orders', '/checkout', '/admin/:path*'], // Matches all admin routes
+  matcher: ['/profile', '/my-orders', '/checkout', '/order', '/admin/:path*'], // Matches all admin routes
 };

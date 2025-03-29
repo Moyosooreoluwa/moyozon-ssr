@@ -56,14 +56,12 @@ export interface Order {
   updatedAt?: string;
 }
 
-// ✅ Fetch data on the server (SSR)
+//  Fetch data on the server (SSR)
 const getMyOrders = async (): Promise<Order[]> => {
   try {
     const userInfo = await getUserInfoFromCookies();
-    console.log('gotten token: ', userInfo);
     const { data } = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/orders/user/${userInfo._id}`,
-      //   `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/orders/mine`,
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/orders/mine`,
       {
         headers: { authorization: `Bearer ${userInfo?.token}` },
       }
@@ -111,7 +109,7 @@ export default async function MyOrders() {
                           bg={`${order.isPaid ? 'success' : 'danger'}`}
                         >
                           {order.isPaid
-                            ? convertToDDMMYYYY(order.paidAt)
+                            ? `Paid: ${convertToDDMMYYYY(order.paidAt)}`
                             : 'Not Paid'}
                         </Badge>
                       </Col>
@@ -121,7 +119,9 @@ export default async function MyOrders() {
                           bg={`${order.isDelivered ? 'success' : 'danger'}`}
                         >
                           {order.isDelivered
-                            ? convertToDDMMYYYY(order.deliveredAt)
+                            ? `Delivered: ${convertToDDMMYYYY(
+                                order.deliveredAt
+                              )}`
                             : 'Not Delivered'}
                         </Badge>
                       </Col>
