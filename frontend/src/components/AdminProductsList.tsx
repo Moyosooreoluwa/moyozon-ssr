@@ -3,12 +3,13 @@
 import { StoreContext } from '@/store/Store';
 import axios from 'axios';
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useContext, useEffect, useReducer } from 'react';
 import MessageBox from './MessageBox';
 import LoadingSpinner from './LoadingSpinner';
 import { getError } from '@/utils/errorHandler';
 import { toast } from 'react-toastify';
+import { Row, Col, Button } from 'react-bootstrap';
 
 interface Product {
   _id: string;
@@ -70,6 +71,7 @@ const initialState: State = {
   pages: 1, // Match initial products.pages
 };
 export default function AdminProductsList() {
+  const router = useRouter();
   const [{ loading, error, products, pages }, dispatch] = useReducer(
     reducer,
     initialState
@@ -79,6 +81,23 @@ export default function AdminProductsList() {
 
   const { state } = useContext(StoreContext);
   const { userInfo } = state;
+  const createHandler = async () => {
+    if (window.confirm('Are you sure to create?')) {
+      try {
+        const { data } = await axios.post(
+          '/api/products',
+          {},
+          {
+            headers: { Authorization: `Bearer ${userInfo?.token}` },
+          }
+        );
+        toast.success('product created successfully');
+        router.push(`/admin/product/${data.product._id}`);
+      } catch (err) {
+        toast.error(getError(err));
+      }
+    }
+  };
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -102,14 +121,28 @@ export default function AdminProductsList() {
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
         <>
+          {' '}
+          <Row>
+            <Col>
+              <h2 className="my-3">All Products</h2>
+            </Col>
+            <Col className="col text-end">
+              <div>
+                <Button type="button" onClick={createHandler}>
+                  Create Product
+                </Button>
+              </div>
+            </Col>
+          </Row>
           <table className="table">
             <thead>
               <tr>
                 <th>ID</th>
                 <th>NAME</th>
-                <th>PRICE</th>
+                <th>PRICE($)</th>
                 <th>CATEGORY</th>
                 <th>BRAND</th>
+                <th>ACTION</th>
               </tr>
             </thead>
             <tbody>
@@ -120,6 +153,9 @@ export default function AdminProductsList() {
                   <td>{product.price}</td>
                   <td>{product.category}</td>
                   <td>{product.brand}</td>
+                  <td>
+                    <Link href={`/admin/product/${product._id}`}>Edit</Link>
+                  </td>
                 </tr>
               ))}
             </tbody>

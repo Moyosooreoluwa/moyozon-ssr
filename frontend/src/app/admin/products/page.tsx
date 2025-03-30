@@ -10,7 +10,6 @@ export default async function ProductListPage() {
   return (
     <>
       <Container className="my-6">
-        <h2 className="my-3">All Products</h2>
         <AdminProductsList />
       </Container>
     </>
