@@ -76,13 +76,19 @@ interface State {
   loading: boolean;
   order: Order;
   error: string;
+  loadingDeliver: boolean;
+  successDeliver: boolean;
   // Add other state properties here if needed
 }
 
 type Action =
   | { type: 'FETCH_REQUEST' }
   | { type: 'FETCH_SUCCESS'; payload: Order }
-  | { type: 'FETCH_FAIL'; payload: string };
+  | { type: 'FETCH_FAIL'; payload: string }
+  | { type: 'DELIVER_REQUEST' }
+  | { type: 'DELIVER_SUCCESS' }
+  | { type: 'DELIVER_FAIL' }
+  | { type: 'DELIVER_RESET' };
 
 const initialOrder: Order = {
   _id: '',
@@ -112,6 +118,18 @@ function reducer(state: State, action: Action) {
       return { ...state, loading: false, order: action.payload, error: '' };
     case 'FETCH_FAIL':
       return { ...state, loading: false, error: action.payload };
+    case 'DELIVER_REQUEST':
+      return { ...state, loadingDeliver: true };
+    case 'DELIVER_SUCCESS':
+      return { ...state, loadingDeliver: false, successDeliver: true };
+    case 'DELIVER_FAIL':
+      return { ...state, loadingDeliver: false };
+    case 'DELIVER_RESET':
+      return {
+        ...state,
+        loadingDeliver: false,
+        successDeliver: false,
+      };
 
     default:
       return state;
@@ -130,11 +148,14 @@ export default function OrderSummary({ id }: Props) {
   const { userInfo } = state;
   const router = useRouter();
 
-  const [{ loading, error, order }, dispatch] = useReducer(reducer, {
-    loading: true,
-    order: initialOrder,
-    error: '',
-  });
+  const [{ loading, error, order, loadingDeliver, successDeliver }, dispatch] =
+    useReducer(reducer, {
+      loading: true,
+      order: initialOrder,
+      error: '',
+      loadingDeliver: false,
+      successDeliver: false,
+    });
 
   const searchParams = useSearchParams();
   const payment = searchParams.get('payment'); // Get the 'payment' query parameter
@@ -191,13 +212,16 @@ export default function OrderSummary({ id }: Props) {
     if (!userInfo) {
       router.push('/signin');
     }
-    if (!order._id || (order._id && order._id !== orderId)) {
+    if (!order._id || successDeliver || (order._id && order._id !== orderId)) {
       fetchOrder();
+    }
+    if (successDeliver) {
+      dispatch({ type: 'DELIVER_RESET' });
     }
     if (payment && order._id) {
       updateOrderStatus();
     }
-  }, [order, order._id, orderId, payment, router, userInfo]);
+  }, [order, order._id, orderId, payment, router, successDeliver, userInfo]);
 
   const createOrder = (data: unknown, actions: any) => {
     return actions.order.create({
@@ -293,6 +317,24 @@ export default function OrderSummary({ id }: Props) {
     throw new Error(
       'PayPal Client ID is missing. Please set NEXT_PUBLIC_PAYPAL_CLIENT_ID in your .env file.'
     );
+  }
+
+  async function deliverOrderHandler() {
+    try {
+      dispatch({ type: 'DELIVER_REQUEST' });
+      await axios.put(
+        `/api/orders/${order._id}/deliver`,
+        {},
+        {
+          headers: { authorization: `Bearer ${userInfo?.token}` },
+        }
+      );
+      dispatch({ type: 'DELIVER_SUCCESS' });
+      toast.success('Order is delivered');
+    } catch (err) {
+      dispatch({ type: 'DELIVER_FAIL' });
+      toast.error(getError(err));
+    }
   }
 
   return loading ? (
@@ -416,45 +458,61 @@ export default function OrderSummary({ id }: Props) {
                     </Col>
                   </Row>
                 </ListGroupItem>
-                {!order.isPaid && (
-                  <>
-                    {order.paymentMethod === 'PayPal' ? (
-                      <>
-                        <ListGroupItem>
-                          <PayPalButtons
-                            style={{
-                              layout: 'vertical', // Stacked layout to fit within the ListGroupItem
-                              color: 'gold', // Blue button color
-                              shape: 'pill', // Rounded corners
-                              label: 'pay', // "Pay with PayPal" label
-                              height: 40, // Custom height
-                              tagline: false, // Hide the tagline
-                            }}
-                            createOrder={createOrder}
-                            onApprove={onApprove}
-                            onError={onError}
-                            onCancel={onCancel}
-                          />
-                        </ListGroupItem>
-                      </>
+                {!order.isPaid &&
+                  (!userInfo?.isAdmin ||
+                    (userInfo.isAdmin && order.user === userInfo._id)) && (
+                    <>
+                      {order.paymentMethod === 'PayPal' ? (
+                        <>
+                          <ListGroupItem>
+                            <PayPalButtons
+                              style={{
+                                layout: 'vertical', // Stacked layout to fit within the ListGroupItem
+                                color: 'gold', // Blue button color
+                                shape: 'pill', // Rounded corners
+                                label: 'pay', // "Pay with PayPal" label
+                                height: 40, // Custom height
+                                tagline: false, // Hide the tagline
+                              }}
+                              createOrder={createOrder}
+                              onApprove={onApprove}
+                              onError={onError}
+                              onCancel={onCancel}
+                            />
+                          </ListGroupItem>
+                        </>
+                      ) : (
+                        <>
+                          <ListGroupItem>
+                            <Button
+                              onClick={handleStripePayment}
+                              style={{
+                                width: '100%',
+                                backgroundColor: '#625AFA',
+                                color: 'white',
+                                borderRadius: '2rem',
+                              }}
+                            >
+                              Pay with{' '}
+                              <span className="font-black">Stripe</span>
+                            </Button>
+                          </ListGroupItem>
+                        </>
+                      )}
+                    </>
+                  )}
+                {userInfo?.isAdmin && order.isPaid && !order.isDelivered && (
+                  <ListGroupItem>
+                    {loadingDeliver ? (
+                      <LoadingSpinner />
                     ) : (
-                      <>
-                        <ListGroupItem>
-                          <Button
-                            onClick={handleStripePayment}
-                            style={{
-                              width: '100%',
-                              backgroundColor: '#625AFA',
-                              color: 'white',
-                              borderRadius: '2rem',
-                            }}
-                          >
-                            Pay with <span className="font-black">Stripe</span>
-                          </Button>
-                        </ListGroupItem>
-                      </>
+                      <div className="d-grid">
+                        <Button type="button" onClick={deliverOrderHandler}>
+                          Deliver Order
+                        </Button>
+                      </div>
                     )}
-                  </>
+                  </ListGroupItem>
                 )}
               </ListGroup>
             </PayPalScriptProvider>
