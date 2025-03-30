@@ -10,6 +10,7 @@ import LoadingSpinner from './LoadingSpinner';
 import { getError } from '@/utils/errorHandler';
 import { toast } from 'react-toastify';
 import { Row, Col, Button } from 'react-bootstrap';
+import DeleteButton from './DeleteButton';
 
 interface Product {
   _id: string;
@@ -155,6 +156,12 @@ export default function AdminProductsList() {
                   <td>{product.brand}</td>
                   <td>
                     <Link href={`/admin/product/${product._id}`}>Edit</Link>
+                    &nbsp;
+                    <DeleteButton
+                      type="product"
+                      product={product}
+                      token={userInfo ? userInfo.token : ''}
+                    />
                   </td>
                 </tr>
               ))}

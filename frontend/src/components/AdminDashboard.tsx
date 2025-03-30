@@ -30,11 +30,17 @@ interface ProductCategory {
   count: number;
 }
 
+interface ProductSummary {
+  _id: string;
+  numProducts: number;
+}
+
 interface SummaryData {
   users: UserSummary[];
   orders: OrderSummary[];
   dailyOrders: DailyOrder[];
   productCategories: ProductCategory[];
+  products: ProductSummary[];
 }
 
 interface State {
@@ -78,6 +84,8 @@ export default function AdminDashboard() {
         const { data } = await axios.get('/api/orders/summary', {
           headers: { Authorization: `Bearer ${userInfo?.token}` },
         });
+        console.log(data);
+
         dispatch({ type: 'FETCH_SUCCESS', payload: data });
       } catch (err) {
         dispatch({
@@ -115,8 +123,22 @@ export default function AdminDashboard() {
               <Card>
                 <CardBody>
                   <CardTitle>
-                    <Link className="no-decoration" href="/admin/orders">
+                    <Link className="no-decoration" href="/admin/products">
                       {' '}
+                      {summary?.products && summary?.products[0]
+                        ? summary.products[0].numProducts
+                        : 0}
+                    </Link>
+                  </CardTitle>
+                  <CardText> Products</CardText>
+                </CardBody>
+              </Card>
+            </Col>
+            <Col md={4}>
+              <Card>
+                <CardBody>
+                  <CardTitle>
+                    <Link className="no-decoration" href="/admin/orders">
                       {summary?.orders && summary?.users[0]
                         ? summary.orders[0].numOrders
                         : 0}
@@ -126,8 +148,10 @@ export default function AdminDashboard() {
                 </CardBody>
               </Card>
             </Col>
+          </Row>
+          <Row>
             <Col md={4}>
-              <Card>
+              <Card className="my-6">
                 <CardBody>
                   <CardTitle>
                     $
