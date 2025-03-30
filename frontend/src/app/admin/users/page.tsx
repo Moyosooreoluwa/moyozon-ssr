@@ -1,4 +1,4 @@
-import DeleteUserButton from '@/components/DeleteUserButton';
+import DeleteButton from '@/components/DeleteButton';
 import { getError } from '@/utils/errorHandler';
 import { getUserInfoFromCookies } from '@/utils/getItemsFromCookies';
 import axios from 'axios';
@@ -66,7 +66,11 @@ export default async function UserListPage() {
                 <td>{user.email}</td>
                 <td>
                   <Link href={`/admin/user/${user._id}`}>Edit</Link> &nbsp;
-                  <DeleteUserButton user={user} token={userInfo.token} />
+                  <DeleteButton
+                    type="user"
+                    user={user}
+                    token={userInfo.token}
+                  />
                 </td>
               </tr>
             ))}

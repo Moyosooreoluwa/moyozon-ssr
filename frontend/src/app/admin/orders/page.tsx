@@ -1,3 +1,4 @@
+import DeleteButton from '@/components/DeleteButton';
 import MessageBox from '@/components/MessageBox';
 import { convertToDDMMYYYY } from '@/utils/changeDateFormat';
 import { getError } from '@/utils/errorHandler';
@@ -74,8 +75,7 @@ const fetchAllOrders = async (): Promise<Order[]> => {
 
 export default async function OrderListPage() {
   const orders = await fetchAllOrders();
-  console.log(orders);
-
+  const userInfo = await getUserInfoFromCookies();
   return (
     <>
       <Container className="my-6">
@@ -126,7 +126,12 @@ export default async function OrderListPage() {
                     </Row>
                   </td>
                   <td>
-                    <Link href={`/order/${order._id}`}>Details</Link>
+                    <Link href={`/order/${order._id}`}>Details</Link>&nbsp;
+                    <DeleteButton
+                      type="order"
+                      token={userInfo.token}
+                      order={order}
+                    />
                   </td>
                 </tr>
               ))}

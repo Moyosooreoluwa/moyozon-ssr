@@ -96,15 +96,6 @@ orderRouter.get(
   })
 );
 
-// orderRouter.get(
-//   '/user/:id',
-//   isAuth,
-//   expressAsyncHandler(async (req, res) => {
-//     const orders = await Order.find({ user: req.user._id });
-//     res.send(orders);
-//   })
-// );
-
 orderRouter.put(
   '/:id/deliver',
   isAuth,
@@ -237,19 +228,18 @@ orderRouter.post(
 //     })
 //   );
 
-// orderRouter.get(
-//   '/mine',
-//   isAuth,
-//   expressAsyncHandler(async (req, res) => {
-//     console.log('User in /mine route:', req.user);
-//     try {
-//       const orders = await Order.find({ user: req.user._id });
-//       console.log('/mine: Found orders:', orders);
-//       res.send(orders);
-//     } catch (error) {
-//       console.error('/mine: Error fetching orders:', error);
-//       res.status(500).send({ message: 'Internal server error' });
-//     }
-//   })
-// );
+orderRouter.delete(
+  '/:id',
+  isAuth,
+  isAdmin,
+  expressAsyncHandler(async (req, res) => {
+    const order = await Order.findById(req.params.id);
+    if (order) {
+      await order.deleteOne();
+      res.send({ message: 'Order Deleted' });
+    } else {
+      res.status(404).send({ message: 'Order Not Found' });
+    }
+  })
+);
 export default orderRouter;
