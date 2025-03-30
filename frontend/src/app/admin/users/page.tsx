@@ -1,7 +1,9 @@
+import DeleteUserButton from '@/components/DeleteUserButton';
 import { getError } from '@/utils/errorHandler';
 import { getUserInfoFromCookies } from '@/utils/getItemsFromCookies';
 import axios from 'axios';
 import { Metadata } from 'next';
+import Link from 'next/link';
 import { Badge, Container } from 'react-bootstrap';
 
 export const metadata: Metadata = {
@@ -17,9 +19,9 @@ export interface User {
   isAdmin: boolean;
 }
 
+const userInfo = await getUserInfoFromCookies();
 const fetchUsers = async (): Promise<User[]> => {
   try {
-    const userInfo = await getUserInfoFromCookies();
     const { data } = await axios.get(
       `${process.env.NEXT_PUBLIC_API_BASE_URL}/users`,
       {
@@ -53,7 +55,7 @@ export default async function UserListPage() {
             {users.map((user) => (
               <tr key={user._id}>
                 <td>
-                  {user._id}{' '}
+                  {user._id}&nbsp;
                   {user.isAdmin && (
                     <Badge pill bg="success">
                       ADMIN
@@ -62,7 +64,10 @@ export default async function UserListPage() {
                 </td>
                 <td>{user.name}</td>
                 <td>{user.email}</td>
-                <td></td>
+                <td>
+                  <Link href={`/admin/user/${user._id}`}>Edit</Link> &nbsp;
+                  <DeleteUserButton user={user} token={userInfo.token} />
+                </td>
               </tr>
             ))}
           </tbody>
