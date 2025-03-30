@@ -2,7 +2,13 @@
 import { StoreContext } from '@/store/Store';
 import { getError } from '@/utils/errorHandler';
 import axios from 'axios';
-import { useContext, useEffect, useReducer, useState } from 'react';
+import {
+  ChangeEvent,
+  useContext,
+  useEffect,
+  useReducer,
+  useState,
+} from 'react';
 import {
   Button,
   Form,
@@ -34,6 +40,7 @@ interface Product {
 interface State {
   loading: boolean;
   loadingUpdate: boolean;
+  loadingUpload: boolean;
   error: string;
 }
 type Action =
@@ -42,7 +49,10 @@ type Action =
   | { type: 'FETCH_FAIL'; payload: string }
   | { type: 'UPDATE_REQUEST' }
   | { type: 'UPDATE_SUCCESS' }
-  | { type: 'UPDATE_FAIL' };
+  | { type: 'UPDATE_FAIL' }
+  | { type: 'UPLOAD_REQUEST' }
+  | { type: 'UPLOAD_SUCCESS' }
+  | { type: 'UPLOAD_FAIL'; payload: string };
 
 const reducer = (state: State, action: Action) => {
   switch (action.type) {
@@ -58,6 +68,16 @@ const reducer = (state: State, action: Action) => {
       return { ...state, loadingUpdate: false };
     case 'UPDATE_FAIL':
       return { ...state, loadingUpdate: false };
+    case 'UPLOAD_REQUEST':
+      return { ...state, loadingUpload: true, errorUpload: '' };
+    case 'UPLOAD_SUCCESS':
+      return {
+        ...state,
+        loadingUpload: false,
+        errorUpload: '',
+      };
+    case 'UPLOAD_FAIL':
+      return { ...state, loadingUpload: false, errorUpload: action.payload };
     default:
       return state;
   }
@@ -67,11 +87,13 @@ export default function EditProductForm({ productId }: Props) {
   const router = useRouter();
   const { state } = useContext(StoreContext);
   const { userInfo } = state;
-  const [{ loading, error, loadingUpdate }, dispatch] = useReducer(reducer, {
-    loading: true,
-    error: '',
-    loadingUpdate: false,
-  });
+  const [{ loading, error, loadingUpdate, loadingUpload }, dispatch] =
+    useReducer(reducer, {
+      loading: true,
+      error: '',
+      loadingUpdate: false,
+      loadingUpload: false,
+    });
   const [name, setName] = useState('');
   const [slug, setSlug] = useState('');
   const [price, setPrice] = useState('');
@@ -104,6 +126,35 @@ export default function EditProductForm({ productId }: Props) {
     };
     fetchData();
   }, [productId]);
+
+  const uploadFileHandler = async (e: ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) {
+      toast.error('No file selected');
+      return;
+    }
+
+    const file = files[0];
+
+    const bodyFormData = new FormData();
+    bodyFormData.append('file', file);
+    try {
+      dispatch({ type: 'UPLOAD_REQUEST' });
+      const { data } = await axios.post('/api/upload', bodyFormData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          authorization: `Bearer ${userInfo?.token}`,
+        },
+      });
+      dispatch({ type: 'UPLOAD_SUCCESS' });
+
+      toast.success('Image uploaded successfully');
+      setImage(data.secure_url);
+    } catch (err) {
+      toast.error(getError(err));
+      dispatch({ type: 'UPLOAD_FAIL', payload: getError(err) });
+    }
+  };
 
   const submitHandler = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -170,12 +221,17 @@ export default function EditProductForm({ productId }: Props) {
             />
           </FormGroup>
           <FormGroup className="mb-3" controlId="image">
-            <FormLabel>Image File</FormLabel>
+            <FormLabel>Image </FormLabel>
             <FormControl
               value={image}
               onChange={(e) => setImage(e.target.value)}
               required
             />
+          </FormGroup>
+          <FormGroup className="mb-3" controlId="imageFile">
+            <FormLabel>Upload File</FormLabel>
+            <Form.Control type="file" onChange={uploadFileHandler} />
+            {loadingUpload && <LoadingSpinner />}
           </FormGroup>
           <FormGroup className="mb-3" controlId="category">
             <FormLabel>Category</FormLabel>
