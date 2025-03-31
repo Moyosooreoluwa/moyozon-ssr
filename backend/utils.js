@@ -3,6 +3,9 @@ import { MailerSend, EmailParams, Sender, Recipient } from 'mailersend';
 import dotenv from 'dotenv';
 dotenv.config();
 
+const futureDate = new Date();
+futureDate.setDate(futureDate.getDate() + 3);
+
 export const generateToken = (user) => {
   return jwt.sign(
     {
@@ -106,6 +109,55 @@ export const sendOrderConfirmationEmail = async (order) => {
       .setReplyTo(sentFrom)
       .setSubject('Order Confirmation') // Set your subject
       .setTemplateId('351ndgwkvrqgzqx8') // Replace with your MailerSend template ID
+      .setPersonalization(personalization);
+
+    const response = await mailersend.email.send(emailParams);
+    console.log('Email sent successfully:', response);
+  } catch (error) {
+    console.error('Error sending email:', error);
+  }
+};
+export const sendOrderShippedEmail = async (order) => {
+  try {
+    const recipients = [
+      new Recipient(
+        order.shippingDetails.email,
+        order.shippingDetails.fullName
+      ),
+    ]; // Use order.user.email and order.user.name
+
+    const personalization = [
+      {
+        email: order.shippingDetails.email,
+        data: {
+          date: order.createdAt.toLocaleDateString(),
+          address:
+            order.shippingDetails.address +
+            ', ' +
+            order.shippingDetails.city +
+            ', ' +
+            order.shippingDetails.postalCode +
+            ', ' +
+            order.shippingDetails.country,
+          delivery: 'Royal Mail',
+          order_number: order._id,
+          delivery_date: futureDate.toLocaleDateString('en-GB'),
+          support_email: 'info@moyozon-ssr.com',
+          tracking_number: 'A1K0B7G4R8',
+        },
+      },
+    ];
+    const sentFrom = new Sender(
+      'iMS_hSciaI@trial-zxk54v8znnzljy6v.mlsender.net',
+      'Moyozon-SSR'
+    );
+
+    const emailParams = new EmailParams()
+      .setFrom(sentFrom)
+      .setTo(recipients)
+      .setReplyTo(sentFrom)
+      .setSubject(`Your Order (${order._id}) Has Been Shipped!`) // Set your subject
+      .setTemplateId('x2p0347vzk74zdrn') // Replace with your MailerSend template ID
       .setPersonalization(personalization);
 
     const response = await mailersend.email.send(emailParams);

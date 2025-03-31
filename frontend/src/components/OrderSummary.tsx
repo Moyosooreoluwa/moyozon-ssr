@@ -395,6 +395,8 @@ export default function OrderSummary({ id }: Props) {
       toast.success('Order is delivered');
     } catch (err) {
       dispatch({ type: 'DELIVER_FAIL' });
+      console.log(err);
+
       toast.error(getError(err));
     }
   }

@@ -3,7 +3,12 @@ import expressAsyncHandler from 'express-async-handler';
 import Order from '../models/orderModel.js';
 import User from '../models/userModel.js';
 import Product from '../models/productModel.js';
-import { isAdmin, isAuth, sendOrderConfirmationEmail } from '../utils.js';
+import {
+  isAdmin,
+  isAuth,
+  sendOrderConfirmationEmail,
+  sendOrderShippedEmail,
+} from '../utils.js';
 import Stripe from 'stripe';
 import dotenv from 'dotenv';
 
@@ -112,7 +117,8 @@ orderRouter.put(
     if (order) {
       order.isDelivered = true;
       order.deliveredAt = Date.now();
-      await order.save();
+      const updatedOrder = await order.save();
+      await sendOrderShippedEmail(updatedOrder);
       res.send({ message: 'Order Delivered' });
     } else {
       res.status(404).send({ message: 'Order Not Found' });
