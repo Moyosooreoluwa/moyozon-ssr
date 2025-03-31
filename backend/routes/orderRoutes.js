@@ -258,4 +258,17 @@ orderRouter.delete(
     }
   })
 );
+orderRouter.delete(
+  '/:id/cancel',
+  isAuth,
+  expressAsyncHandler(async (req, res) => {
+    const order = await Order.findById(req.params.id);
+    if (order) {
+      await order.deleteOne();
+      res.send({ message: 'Order Cancelled and Deleted' });
+    } else {
+      res.status(404).send({ message: 'Order Not Found' });
+    }
+  })
+);
 export default orderRouter;

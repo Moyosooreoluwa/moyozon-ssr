@@ -83,14 +83,21 @@ type Props =
       order: Order;
       product?: never;
       token: string;
-    } // Only order allowed
+    }
+  | {
+      type: 'cancelOrder';
+      user?: never;
+      order: Order;
+      product?: never;
+      token: string;
+    }
   | {
       type: 'product';
       user?: never;
       order?: never;
       product: Product;
       token: string;
-    }; // Only order allowed
+    };
 
 export default function DeleteButton({
   type,
@@ -105,12 +112,12 @@ export default function DeleteButton({
       toast.error('No user found');
       return;
     }
-    if (window.confirm('Are you sure to delete?')) {
+    if (window.confirm('Are you sure to delete this user?')) {
       try {
         await axios.delete(`/api/users/${user._id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        toast.success('user deleted successfully');
+        toast.success('User Deleted Successfully');
         router.refresh();
       } catch (err) {
         toast.error(getError(err));
@@ -127,8 +134,29 @@ export default function DeleteButton({
         await axios.delete(`/api/orders/${order._id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        toast.success('order deleted successfully');
+        toast.success('Order Deleted Successfully');
         router.refresh();
+      } catch (err) {
+        toast.error(getError(err));
+      }
+    }
+  };
+  const cancelOrderHandler = async (order: Order) => {
+    if (!order) {
+      toast.error('No order found');
+      return;
+    }
+    if (
+      window.confirm(
+        'Are you sure you want to cancel this order? This action is irreversible as the order will also be deleted'
+      )
+    ) {
+      try {
+        await axios.delete(`/api/orders/${order._id}/cancel`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        toast.success('Order Cancelled successfully');
+        window.location.href = '/my-orders';
       } catch (err) {
         toast.error(getError(err));
       }
@@ -144,7 +172,7 @@ export default function DeleteButton({
         await axios.delete(`/api/products/${product._id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        toast.success('product deleted successfully');
+        toast.success('Product Deleted Successfully');
         window.location.reload();
       } catch (err) {
         toast.error(getError(err));
@@ -162,7 +190,7 @@ export default function DeleteButton({
         >
           Delete
         </Button>
-      ) : order ? (
+      ) : type === 'order' ? (
         <Button
           type="button"
           variant="danger"
@@ -170,7 +198,15 @@ export default function DeleteButton({
         >
           Delete
         </Button>
-      ) : product ? (
+      ) : type === 'cancelOrder' ? (
+        <Button
+          type="button"
+          variant="danger"
+          onClick={() => cancelOrderHandler(order)}
+        >
+          Cancel Order
+        </Button>
+      ) : type === 'product' ? (
         <Button
           type="button"
           variant="danger"

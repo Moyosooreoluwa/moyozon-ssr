@@ -24,6 +24,7 @@ import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 import { toast } from 'react-toastify';
 import { convertToDDMMYYYY } from '@/utils/changeDateFormat';
 import { loadStripe } from '@stripe/stripe-js';
+import DeleteButton from './DeleteButton';
 
 type Props = {
   id: string;
@@ -492,7 +493,6 @@ export default function OrderSummary({ id }: Props) {
                 clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID!,
                 currency: 'USD',
               }}
-              //   deferLoading={true}
             >
               <ListGroup variant="flush">
                 <ListGroupItem>
@@ -570,6 +570,15 @@ export default function OrderSummary({ id }: Props) {
                           </ListGroupItem>
                         </>
                       )}
+                      <ListGroupItem>
+                        <div className="d-grid">
+                          <DeleteButton
+                            token={userInfo ? userInfo.token : ''}
+                            type="cancelOrder"
+                            order={order}
+                          />
+                        </div>
+                      </ListGroupItem>
                     </>
                   )}
                 {userInfo?.isAdmin && order.isPaid && !order.isDelivered && (
