@@ -67,7 +67,7 @@ export default function OrderPreview() {
         '/api/orders',
         {
           orderItems: cart.cartItems,
-          shippingAddress: cart.shippingAddress,
+          shippingDetails: cart.shippingDetails,
           paymentMethod: cart.paymentMethod,
           itemsPrice: cart.itemsPrice,
           shippingPrice: cart.shippingPrice,
@@ -103,10 +103,14 @@ export default function OrderPreview() {
             <CardBody>
               <CardTitle>Shipping</CardTitle>
               <CardText>
-                <strong>Name:</strong> {cart.shippingAddress.fullName} <br />
-                <strong>Address: </strong> {cart.shippingAddress.address},
-                {cart.shippingAddress.city}, {cart.shippingAddress.postalCode},
-                {cart.shippingAddress.country}
+                <strong>Name:</strong> {cart.shippingDetails.fullName} <br />
+                <strong>Address: </strong> {cart.shippingDetails.address},
+                {cart.shippingDetails.city}, {cart.shippingDetails.postalCode},
+                {cart.shippingDetails.country}
+                <br />
+                <strong>Email: </strong> {cart.shippingDetails.email}
+                <br />
+                <strong>Phone: </strong> {cart.shippingDetails.phone}
               </CardText>
               <Link href="/shipping">Edit</Link>
             </CardBody>

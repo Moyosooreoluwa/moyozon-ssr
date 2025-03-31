@@ -18,18 +18,19 @@ export interface CartItem {
   quantity: number;
 }
 
-export interface ShippingAddress {
+export interface shippingDetails {
   fullName?: string;
   address?: string;
   city?: string;
   postalCode?: string;
   country?: string;
-  location?: object;
+  email?: string;
+  phone?: string;
 }
 
 export interface Cart {
   cartItems: CartItem[];
-  shippingAddress: ShippingAddress;
+  shippingDetails: shippingDetails;
   paymentMethod: string;
   itemsPrice?: number; // Optional, as it's calculated
   shippingPrice?: number; // Optional, as it's calculated
@@ -54,14 +55,14 @@ export type ActionType =
   | { type: 'CART_REMOVE_ITEM'; payload: CartItem }
   | { type: 'USER_SIGNIN'; payload: UserInfo }
   | { type: 'USER_SIGNOUT' }
-  | { type: 'SAVE_SHIPPING_ADDRESS'; payload: ShippingAddress }
+  | { type: 'SAVE_SHIPPING_DETAILS'; payload: shippingDetails }
   | { type: 'SAVE_PAYMENT_METHOD'; payload: string }
   | { type: 'CART_CLEAR' };
 
 const initialState: StateType = {
   cart: {
     cartItems: [],
-    shippingAddress: {},
+    shippingDetails: {},
     paymentMethod: '',
   },
   userInfo: null,
@@ -117,11 +118,11 @@ export function reducer(state: StateType, action: ActionType): StateType {
         cart: { ...state.cart, cartItems: [] }, //  clear cart
       };
     }
-    case 'SAVE_SHIPPING_ADDRESS':
-      Cookies.set('shippingAddress', JSON.stringify(action.payload));
+    case 'SAVE_SHIPPING_DETAILS':
+      Cookies.set('shippingDetails', JSON.stringify(action.payload));
       return {
         ...state,
-        cart: { ...state.cart, shippingAddress: action.payload },
+        cart: { ...state.cart, shippingDetails: action.payload },
       };
     case 'SAVE_PAYMENT_METHOD':
       Cookies.set('paymentMethod', JSON.stringify(action.payload));
@@ -131,6 +132,8 @@ export function reducer(state: StateType, action: ActionType): StateType {
       };
     case 'CART_CLEAR':
       Cookies.remove('cartItems');
+      Cookies.remove('paymentMethod');
+      Cookies.remove('shippingDetails');
       return { ...state, cart: { ...state.cart, cartItems: [] } };
     default:
       return state;

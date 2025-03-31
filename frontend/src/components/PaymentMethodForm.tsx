@@ -8,7 +8,7 @@ export default function PaymentMethodForm() {
   const router = useRouter();
   const { state, dispatch } = useContext(StoreContext);
   const {
-    cart: { shippingAddress, paymentMethod },
+    cart: { shippingDetails, paymentMethod },
   } = state;
 
   const [paymentMethodName, setPaymentMethod] = useState(
@@ -16,10 +16,10 @@ export default function PaymentMethodForm() {
   );
 
   useEffect(() => {
-    if (!shippingAddress.address) {
+    if (!shippingDetails.address) {
       router.push('/shipping');
     }
-  }, [shippingAddress, router]);
+  }, [shippingDetails, router]);
 
   const submitHandler = (e: { preventDefault: () => void }) => {
     e.preventDefault();

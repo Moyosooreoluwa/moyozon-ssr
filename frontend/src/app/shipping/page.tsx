@@ -1,5 +1,5 @@
 import CheckoutSteps from '@/components/CheckoutSteps';
-import ShippingAddressForm from '@/components/ShippingAddressForm';
+import ShippingDetailsForm from '@/components/ShippingDetailsForm';
 import { Metadata } from 'next';
 import React from 'react';
 import { Container } from 'react-bootstrap';
@@ -15,7 +15,7 @@ export default function ShippingPage() {
       <Container className="mt-5 max-w-[600px]">
         <CheckoutSteps step1 step2></CheckoutSteps>
         <h2 className="my-3">Shipping Details</h2>
-        <ShippingAddressForm />
+        <ShippingDetailsForm />
       </Container>
     </>
   );

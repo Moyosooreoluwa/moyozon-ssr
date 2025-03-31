@@ -3,7 +3,7 @@ import expressAsyncHandler from 'express-async-handler';
 import Order from '../models/orderModel.js';
 import User from '../models/userModel.js';
 import Product from '../models/productModel.js';
-import { isAdmin, isAuth } from '../utils.js';
+import { isAdmin, isAuth, sendOrderConfirmationEmail } from '../utils.js';
 import Stripe from 'stripe';
 import dotenv from 'dotenv';
 
@@ -30,7 +30,7 @@ orderRouter.post(
   expressAsyncHandler(async (req, res) => {
     const newOrder = new Order({
       orderItems: req.body.orderItems.map((x) => ({ ...x, product: x._id })),
-      shippingAddress: req.body.shippingAddress,
+      shippingDetails: req.body.shippingDetails,
       paymentMethod: req.body.paymentMethod,
       itemsPrice: req.body.itemsPrice,
       shippingPrice: req.body.shippingPrice,
@@ -136,7 +136,9 @@ orderRouter.put(
       };
 
       const updatedOrder = await order.save();
+      await sendOrderConfirmationEmail(updatedOrder);
       res.send({ message: 'Order Paid', order: updatedOrder });
+      // Send order confirmation email
     } else {
       res.status(404).send({ message: 'Order Not Found' });
     }

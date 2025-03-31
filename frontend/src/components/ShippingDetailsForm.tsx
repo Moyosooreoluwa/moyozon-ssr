@@ -10,20 +10,22 @@ import {
   FormLabel,
 } from 'react-bootstrap';
 
-export default function ShippingAddressForm() {
+export default function ShippingDetailsForm() {
   const { state, dispatch } = useContext(StoreContext);
   const {
     userInfo,
-    cart: { shippingAddress },
+    cart: { shippingDetails },
   } = state;
 
-  const [fullName, setFullName] = useState(shippingAddress.fullName || '');
-  const [address, setAddress] = useState(shippingAddress.address || '');
-  const [city, setCity] = useState(shippingAddress.city || '');
+  const [fullName, setFullName] = useState(shippingDetails.fullName || '');
+  const [address, setAddress] = useState(shippingDetails.address || '');
+  const [city, setCity] = useState(shippingDetails.city || '');
   const [postalCode, setPostalCode] = useState(
-    shippingAddress.postalCode || ''
+    shippingDetails.postalCode || ''
   );
-  const [country, setCountry] = useState(shippingAddress.country || '');
+  const [country, setCountry] = useState(shippingDetails.country || '');
+  const [email, setEmail] = useState(shippingDetails.email || '');
+  const [phone, setPhone] = useState(shippingDetails.phone || '');
   const router = useRouter();
 
   useEffect(() => {
@@ -35,13 +37,15 @@ export default function ShippingAddressForm() {
   const submitHandler = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     dispatch({
-      type: 'SAVE_SHIPPING_ADDRESS',
+      type: 'SAVE_SHIPPING_DETAILS',
       payload: {
         fullName,
         address,
         city,
         postalCode,
         country,
+        email,
+        phone,
       },
     });
     router.push('/payment');
@@ -86,6 +90,23 @@ export default function ShippingAddressForm() {
           <FormControl
             value={country}
             onChange={(e) => setCountry(e.target.value)}
+            required
+          />
+        </FormGroup>
+        <FormGroup className="mb-3" controlId="email">
+          <FormLabel>Email</FormLabel>
+          <FormControl
+            type="email"
+            value={email}
+            required
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </FormGroup>
+        <FormGroup className="mb-3" controlId="phone">
+          <FormLabel>Phone</FormLabel>
+          <FormControl
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
             required
           />
         </FormGroup>

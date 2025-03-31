@@ -38,12 +38,14 @@ export interface OrderItem {
   product: string; // mongoose.Types.ObjectId as string
 }
 
-export interface ShippingAddress {
+export interface ShippingDetails {
   fullName: string;
   address: string;
   city: string;
   postalCode: string;
   country: string;
+  email: string;
+  phone: string;
 }
 
 export interface PaymentResult {
@@ -56,7 +58,7 @@ export interface PaymentResult {
 export interface Order {
   _id: string;
   orderItems: OrderItem[];
-  shippingAddress: ShippingAddress;
+  shippingDetails: ShippingDetails;
   paymentMethod: string;
   paymentResult?: PaymentResult;
   itemsPrice: number;
@@ -93,12 +95,14 @@ type Action =
 const initialOrder: Order = {
   _id: '',
   orderItems: [],
-  shippingAddress: {
+  shippingDetails: {
     fullName: '',
     address: '',
     city: '',
     postalCode: '',
     country: '',
+    email: '',
+    phone: '',
   },
   paymentMethod: '',
   itemsPrice: 0,
@@ -348,10 +352,14 @@ export default function OrderSummary({ id }: Props) {
           <CardBody>
             <CardTitle>Shipping</CardTitle>
             <CardText>
-              <strong>Name:</strong> {order.shippingAddress.fullName} <br />
-              <strong>Address: </strong> {order.shippingAddress.address},
-              {order.shippingAddress.city}, {order.shippingAddress.postalCode},
-              {order.shippingAddress.country}
+              <strong>Name: </strong> {order.shippingDetails.fullName} <br />
+              <strong>Address: </strong> {order.shippingDetails.address},
+              {order.shippingDetails.city}, {order.shippingDetails.postalCode},
+              {order.shippingDetails.country}
+              <br />
+              <strong>Email: </strong> {order.shippingDetails.email}
+              <br />
+              <strong>Phone: </strong> {order.shippingDetails.phone}
             </CardText>
             {order.isDelivered ? (
               <MessageBox variant="success">

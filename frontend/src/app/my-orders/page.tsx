@@ -22,7 +22,7 @@ export interface OrderItem {
   product: string; // mongoose.Types.ObjectId as string
 }
 
-export interface ShippingAddress {
+export interface ShippingDetails {
   fullName: string;
   address: string;
   city: string;
@@ -40,7 +40,7 @@ export interface PaymentResult {
 export interface Order {
   _id: string;
   orderItems: OrderItem[];
-  shippingAddress: ShippingAddress;
+  shippingDetails: ShippingDetails;
   paymentMethod: string;
   paymentResult?: PaymentResult;
   itemsPrice: number;
