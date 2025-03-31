@@ -111,6 +111,9 @@ export default function OrderPreview() {
                 <strong>Email: </strong> {cart.shippingDetails.email}
                 <br />
                 <strong>Phone: </strong> {cart.shippingDetails.phone}
+                <br />
+                <strong>Delivery Message: </strong>{' '}
+                {cart.shippingDetails.customerMessage}
               </CardText>
               <Link href="/shipping">Edit</Link>
             </CardBody>
@@ -201,16 +204,19 @@ export default function OrderPreview() {
                   </Row>
                 </ListGroupItem>
                 <ListGroupItem>
-                  <div className="d-grid">
-                    <Button
-                      type="button"
-                      onClick={placeOrderHandler}
-                      disabled={cart.cartItems.length === 0}
-                    >
-                      Place Order
-                    </Button>
-                  </div>
-                  {loading && <LoadingSpinner />}
+                  {loading ? (
+                    <LoadingSpinner />
+                  ) : (
+                    <div className="d-grid">
+                      <Button
+                        type="button"
+                        onClick={placeOrderHandler}
+                        disabled={cart.cartItems.length === 0}
+                      >
+                        Place Order
+                      </Button>
+                    </div>
+                  )}
                 </ListGroupItem>
               </ListGroup>
             </CardBody>

@@ -19,6 +19,7 @@ import {
 } from 'react-bootstrap';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useRef } from 'react';
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 import { toast } from 'react-toastify';
 import { convertToDDMMYYYY } from '@/utils/changeDateFormat';
@@ -46,6 +47,7 @@ export interface ShippingDetails {
   country: string;
   email: string;
   phone: string;
+  customerMessage: string;
 }
 
 export interface PaymentResult {
@@ -103,6 +105,7 @@ const initialOrder: Order = {
     country: '',
     email: '',
     phone: '',
+    customerMessage: '',
   },
   paymentMethod: '',
   itemsPrice: 0,
@@ -164,25 +167,67 @@ export default function OrderSummary({ id }: Props) {
   const searchParams = useSearchParams();
   const payment = searchParams.get('payment'); // Get the 'payment' query parameter
 
-  useEffect(() => {
-    const fetchOrder = async () => {
-      try {
-        dispatch({ type: 'FETCH_REQUEST' });
-        const { data } = await axios.get(`/api/orders/${orderId}`, {
-          headers: { authorization: `Bearer ${userInfo?.token}` },
-        });
-        dispatch({ type: 'FETCH_SUCCESS', payload: data });
-      } catch (err) {
-        dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
-      }
-    };
-    const updateOrderStatus = async () => {
-      if (payment === 'success') {
+  const hasUpdatedOrder = useRef(false); // Track if order update has run
+
+  useEffect(
+    () => {
+      const fetchOrder = async () => {
         try {
+          dispatch({ type: 'FETCH_REQUEST' });
+          const { data } = await axios.get(`/api/orders/${orderId}`, {
+            headers: { authorization: `Bearer ${userInfo?.token}` },
+          });
+          dispatch({ type: 'FETCH_SUCCESS', payload: data });
+        } catch (err) {
+          dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
+        }
+      };
+      const updateOrderStatus = async () => {
+        // if (payment === 'success') {
+        //   try {
+        //     await axios.put(
+        //       `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/orders/${order._id}/pay`,
+        //       {
+        //         id: `stripe_${order._id}`,
+        //         status: 'COMPLETED',
+        //         update_time: new Date().toISOString(),
+        //         email_address: userInfo?.email || 'unknown',
+        //       },
+        //       {
+        //         headers: { authorization: `Bearer ${userInfo?.token}` },
+        //       }
+        //     );
+        //     dispatch({
+        //       type: 'FETCH_SUCCESS',
+        //       payload: {
+        //         ...order,
+        //         isPaid: true,
+        //         paidAt: new Date().toISOString(),
+        //         paymentResult: {
+        //           id: `stripe_${order._id}`,
+        //           status: 'COMPLETED',
+        //           update_time: new Date().toISOString(),
+        //           email_address: userInfo?.email || 'unknown',
+        //         },
+        //       },
+        //     });
+        //       toast.success('Payment successful via Stripe!');
+        //   } catch (err) {
+        //     toast.error(getError(err));
+        //   }
+        // } else if (payment === 'canceled') {
+        //   toast.error('Payment cancelled via Stripe.');
+        // }
+        const orderId = localStorage.getItem('lastOrderId'); // Retrieve stored order ID
+        if (!orderId || payment !== 'success' || hasUpdatedOrder.current)
+          return; // Prevent re-runs
+
+        try {
+          hasUpdatedOrder.current = true; // Mark as updated to prevent multiple runs
           await axios.put(
-            `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/orders/${order._id}/pay`,
+            `/api/orders/${orderId}/pay`,
             {
-              id: `stripe_${order._id}`,
+              id: `stripe_${orderId}`,
               status: 'COMPLETED',
               update_time: new Date().toISOString(),
               email_address: userInfo?.email || 'unknown',
@@ -191,6 +236,7 @@ export default function OrderSummary({ id }: Props) {
               headers: { authorization: `Bearer ${userInfo?.token}` },
             }
           );
+
           dispatch({
             type: 'FETCH_SUCCESS',
             payload: {
@@ -198,34 +244,45 @@ export default function OrderSummary({ id }: Props) {
               isPaid: true,
               paidAt: new Date().toISOString(),
               paymentResult: {
-                id: `stripe_${order._id}`,
+                id: `stripe_${orderId}`,
                 status: 'COMPLETED',
                 update_time: new Date().toISOString(),
                 email_address: userInfo?.email || 'unknown',
               },
             },
           });
-          //   toast.success('Payment successful via Stripe!');
+
+          localStorage.removeItem('lastOrderId'); // Clean up
+          toast.success('Payment successful via Stripe!');
         } catch (err) {
           toast.error(getError(err));
         }
-      } else if (payment === 'canceled') {
-        toast.error('Payment cancelled via Stripe.');
+      };
+      if (!userInfo) {
+        router.push('/signin');
       }
-    };
-    if (!userInfo) {
-      router.push('/signin');
+      if (
+        !order._id ||
+        successDeliver ||
+        (order._id && order._id !== orderId)
+      ) {
+        fetchOrder();
+      }
+      if (successDeliver) {
+        dispatch({ type: 'DELIVER_RESET' });
+      }
+      // if (payment && order._id) {
+      //   updateOrderStatus();
+      // }
+      // if (payment === 'success') {
+      //   updateOrderStatus();
+      // }
+      if (payment === 'success' && !hasUpdatedOrder.current) {
+        updateOrderStatus();
+      }
     }
-    if (!order._id || successDeliver || (order._id && order._id !== orderId)) {
-      fetchOrder();
-    }
-    if (successDeliver) {
-      dispatch({ type: 'DELIVER_RESET' });
-    }
-    if (payment && order._id) {
-      updateOrderStatus();
-    }
-  }, [order, order._id, orderId, payment, router, successDeliver, userInfo]);
+    //  [ order._id, orderId, payment, router, successDeliver, userInfo]
+  );
 
   const createOrder = (data: unknown, actions: any) => {
     return actions.order.create({
@@ -306,6 +363,7 @@ export default function OrderSummary({ id }: Props) {
 
       const { url } = response.data;
       if (url) {
+        localStorage.setItem('lastOrderId', order._id); // Store order ID for reference after redirect
         window.location.href = url;
       } else {
         toast.error('Failed to create Stripe Checkout session.');
@@ -360,6 +418,9 @@ export default function OrderSummary({ id }: Props) {
               <strong>Email: </strong> {order.shippingDetails.email}
               <br />
               <strong>Phone: </strong> {order.shippingDetails.phone}
+              <br />
+              <strong>Delivery Message: </strong>{' '}
+              {order.shippingDetails.customerMessage}
             </CardText>
             {order.isDelivered ? (
               <MessageBox variant="success">

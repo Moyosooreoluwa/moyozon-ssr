@@ -26,6 +26,9 @@ export default function ShippingDetailsForm() {
   const [country, setCountry] = useState(shippingDetails.country || '');
   const [email, setEmail] = useState(shippingDetails.email || '');
   const [phone, setPhone] = useState(shippingDetails.phone || '');
+  const [customerMessage, setCustomerMessage] = useState(
+    shippingDetails.customerMessage || ''
+  );
   const router = useRouter();
 
   useEffect(() => {
@@ -46,6 +49,7 @@ export default function ShippingDetailsForm() {
         country,
         email,
         phone,
+        customerMessage,
       },
     });
     router.push('/payment');
@@ -107,6 +111,14 @@ export default function ShippingDetailsForm() {
           <FormControl
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
+            required
+          />
+        </FormGroup>
+        <FormGroup className="mb-3" controlId="customerMessage">
+          <FormLabel>Delivery Message</FormLabel>
+          <FormControl
+            value={customerMessage}
+            onChange={(e) => setCustomerMessage(e.target.value)}
             required
           />
         </FormGroup>

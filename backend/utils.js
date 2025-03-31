@@ -75,7 +75,7 @@ export const sendOrderConfirmationEmail = async (order) => {
               order.shippingDetails.postalCode +
               ', ' +
               order.shippingDetails.country,
-            customer_message: order.customerMessage || '', // Add customer message if it exists
+            customer_message: order.shippingDetails.customerMessage || '', // Add customer message if it exists
           },
           store: {
             name: 'Moyozon-SSR', // Replace with your store name

@@ -29,6 +29,9 @@ export interface ShippingDetails {
   city: string;
   postalCode: string;
   country: string;
+  email: string;
+  phone: string;
+  customerMessage: string;
 }
 
 export interface PaymentResult {
