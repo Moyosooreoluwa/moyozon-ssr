@@ -25,6 +25,7 @@ interface Product {
   _id: string;
   name: string;
   image: string;
+  images?: string[];
   description: string;
   price: number;
   stockCount: number;

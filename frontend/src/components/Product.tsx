@@ -1,6 +1,13 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { Card, CardBody, CardText, CardTitle } from 'react-bootstrap';
+import {
+  Card,
+  CardBody,
+  CardText,
+  CardTitle,
+  Carousel,
+  CarouselItem,
+} from 'react-bootstrap';
 import Rating from './Rating';
 import AddToCartButton from './AddToCartButton';
 
@@ -9,6 +16,7 @@ type ProductProps = {
     _id: string;
     name: string;
     image: string;
+    images?: string[];
     description: string;
     price: number;
     stockCount: number;
@@ -21,6 +29,10 @@ type ProductProps = {
 };
 
 const Product = ({ product }: ProductProps) => {
+  const allImages =
+    product.images && product.images.length > 0
+      ? [product.image, ...product.images]
+      : [product.image];
   return (
     <Card
       style={{
@@ -32,16 +44,36 @@ const Product = ({ product }: ProductProps) => {
         borderColor: 'transparent',
       }}
     >
-      <Link href={`/product/${product.slug}`} passHref>
-        <div style={{ position: 'relative', width: '100%', height: '250px' }}>
-          <Image
+      <div style={{ position: 'relative', width: '100%', height: '250px' }}>
+        {/* <Image
             src={product.image}
             alt={product.name}
             fill
             style={{ objectFit: 'cover', borderRadius: '0.5rem' }}
-          />
-        </div>
-      </Link>
+          /> */}
+        <Carousel>
+          {allImages.map((img, index) => (
+            <CarouselItem key={index}>
+              <div
+                style={{
+                  width: '100%',
+                  height: '250px',
+                  position: 'relative',
+                }}
+              >
+                <Link href={`/product/${product.slug}`} passHref>
+                  <Image
+                    src={img}
+                    alt={`${product.name} - Image ${index + 1}`}
+                    fill
+                    style={{ objectFit: 'cover', borderRadius: '0.5rem' }}
+                  />
+                </Link>
+              </div>
+            </CarouselItem>
+          ))}
+        </Carousel>
+      </div>
 
       <CardBody style={{ padding: 0 }} className="">
         {/* <Card.Body className="d-flex flex-column"> */}

@@ -9,7 +9,7 @@ export default function Loading() {
       //   style={{ minHeight: '100vh' }} // Full viewport height
     >
       <Spinner variant="primary" animation="border" role="status">
-        <span className="visually-hidden">Loading Products...</span>
+        <span className="visually-hidden">Loading ...</span>
       </Spinner>
     </Container>
   );

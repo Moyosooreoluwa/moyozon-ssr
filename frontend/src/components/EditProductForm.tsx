@@ -15,11 +15,14 @@ import {
   FormControl,
   FormGroup,
   FormLabel,
+  ListGroup,
+  ListGroupItem,
 } from 'react-bootstrap';
 import LoadingSpinner from './LoadingSpinner';
 import MessageBox from './MessageBox';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
+import { FaRegCircleXmark } from 'react-icons/fa6';
 
 type Props = {
   productId: string;
@@ -28,6 +31,7 @@ interface Product {
   _id: string;
   name: string;
   image: string;
+  images?: string[];
   description: string;
   price: number;
   stockCount: number;
@@ -98,6 +102,7 @@ export default function EditProductForm({ productId }: Props) {
   const [slug, setSlug] = useState('');
   const [price, setPrice] = useState('');
   const [image, setImage] = useState('');
+  const [images, setImages] = useState<string[]>([]); // Explicitly type as string[]
   const [category, setCategory] = useState('');
   const [stockCount, setStockCount] = useState('');
   const [brand, setBrand] = useState('');
@@ -112,6 +117,7 @@ export default function EditProductForm({ productId }: Props) {
         setSlug(data.slug);
         setPrice(data.price);
         setImage(data.image);
+        setImages(data.images || []);
         setCategory(data.category);
         setStockCount(data.stockCount);
         setBrand(data.brand);
@@ -127,7 +133,10 @@ export default function EditProductForm({ productId }: Props) {
     fetchData();
   }, [productId]);
 
-  const uploadFileHandler = async (e: ChangeEvent<HTMLInputElement>) => {
+  const uploadFileHandler = async (
+    e: ChangeEvent<HTMLInputElement>,
+    forImages: boolean
+  ) => {
     const files = e.target.files;
     if (!files || files.length === 0) {
       toast.error('No file selected');
@@ -135,7 +144,6 @@ export default function EditProductForm({ productId }: Props) {
     }
 
     const file = files[0];
-
     const bodyFormData = new FormData();
     bodyFormData.append('file', file);
     try {
@@ -143,17 +151,29 @@ export default function EditProductForm({ productId }: Props) {
       const { data } = await axios.post('/api/upload', bodyFormData, {
         headers: {
           'Content-Type': 'multipart/form-data',
-          authorization: `Bearer ${userInfo?.token}`,
+          authorization: `Bearer ${userInfo?.token || ''}`,
         },
       });
       dispatch({ type: 'UPLOAD_SUCCESS' });
 
-      toast.success('Image uploaded successfully');
-      setImage(data.secure_url);
+      if (forImages) {
+        setImages([...images, data.secure_url]);
+      } else {
+        setImage(data.secure_url);
+      }
+      toast.success('Image uploaded successfully. click Update to apply it');
     } catch (err) {
       toast.error(getError(err));
       dispatch({ type: 'UPLOAD_FAIL', payload: getError(err) });
     }
+  };
+
+  const deleteFileHandler = async (fileName: string, forImages: boolean) => {
+    console.log(fileName, forImages);
+    console.log(images);
+    console.log(images.filter((x) => x !== fileName));
+    setImages(images.filter((x) => x !== fileName));
+    toast.success('Image removed successfully. click Update to apply it');
   };
 
   const submitHandler = async (e: { preventDefault: () => void }) => {
@@ -168,6 +188,7 @@ export default function EditProductForm({ productId }: Props) {
           slug,
           price,
           image,
+          images,
           category,
           brand,
           stockCount,
@@ -229,9 +250,41 @@ export default function EditProductForm({ productId }: Props) {
             />
           </FormGroup>
           <FormGroup className="mb-3" controlId="imageFile">
-            <FormLabel>Upload File</FormLabel>
-            <Form.Control type="file" onChange={uploadFileHandler} />
+            <FormLabel>Upload Image</FormLabel>
+            <Form.Control
+              type="file"
+              onChange={(e) =>
+                uploadFileHandler(e as ChangeEvent<HTMLInputElement>, false)
+              } // Pass false for single image
+            />
             {loadingUpload && <LoadingSpinner />}
+          </FormGroup>
+          <FormGroup className="mb-3" controlId="additionalImage">
+            <Form.Label>Additional Images</Form.Label>
+            {images.length === 0 && <MessageBox>No image</MessageBox>}
+            <ListGroup variant="flush">
+              {images.map((x) => (
+                <ListGroupItem key={x}>
+                  {x}
+                  <Button
+                    variant="light"
+                    onClick={() => deleteFileHandler(x, true)}
+                  >
+                    <FaRegCircleXmark />
+                  </Button>
+                </ListGroupItem>
+              ))}
+            </ListGroup>
+          </FormGroup>
+          <FormGroup className="mb-3" controlId="additionalImageFile">
+            <FormLabel>Upload Aditional Image(s)</FormLabel>
+            <FormControl
+              type="file"
+              disabled={loadingUpload}
+              onChange={(e) =>
+                uploadFileHandler(e as ChangeEvent<HTMLInputElement>, true)
+              }
+            />
           </FormGroup>
           <FormGroup className="mb-3" controlId="category">
             <FormLabel>Category</FormLabel>
