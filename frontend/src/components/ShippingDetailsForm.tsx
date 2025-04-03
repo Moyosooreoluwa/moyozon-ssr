@@ -49,7 +49,7 @@ export default function ShippingDetailsForm() {
         country,
         email,
         phone,
-        customerMessage,
+        customerMessage: customerMessage ? customerMessage : '',
       },
     });
     router.push('/payment');

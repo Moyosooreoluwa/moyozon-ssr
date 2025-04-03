@@ -1,12 +1,72 @@
+// import express from 'express';
+// import multer from 'multer';
+// import { v2 as cloudinary } from 'cloudinary';
+// import streamifier from 'streamifier';
+// import { isAdmin, isAuth } from '../utils.js';
+
+// const upload = multer();
+
+// const uploadRouter = express.Router();
+
+// uploadRouter.post(
+//   '/',
+//   isAuth,
+//   isAdmin,
+//   upload.single('file'),
+//   async (req, res) => {
+//     cloudinary.config({
+//       cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+//       api_key: process.env.CLOUDINARY_API_KEY,
+//       api_secret: process.env.CLOUDINARY_API_SECRET,
+//     });
+//     const streamUpload = (req) => {
+//       return new Promise((resolve, reject) => {
+//         const stream = cloudinary.uploader.upload_stream((error, result) => {
+//           if (result) {
+//             resolve(result);
+//           } else {
+//             reject(error);
+//           }
+//         });
+//         streamifier.createReadStream(req.file.buffer).pipe(stream);
+//       });
+//     };
+//     const result = await streamUpload(req);
+//     res.send(result);
+//   }
+// );
+// export default uploadRouter;
+
 import express from 'express';
 import multer from 'multer';
-import { v2 as cloudinary } from 'cloudinary';
-import streamifier from 'streamifier';
-import { isAdmin, isAuth } from '../utils.js';
-
-const upload = multer();
+import cloudinary from 'cloudinary';
+import streamifier from 'streamifier'; // Ensure this is imported
+import { isAuth, isAdmin } from '../utils.js'; // Adjust path as needed
 
 const uploadRouter = express.Router();
+
+// Configure Cloudinary once at startup (move outside the route)
+cloudinary.v2.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+// Set up multer to store files in memory (no need for disk storage with Cloudinary)
+const upload = multer({ storage: multer.memoryStorage() });
+
+const streamUpload = (req) => {
+  return new Promise((resolve, reject) => {
+    const stream = cloudinary.v2.uploader.upload_stream((error, result) => {
+      if (result) {
+        resolve(result);
+      } else {
+        reject(error);
+      }
+    });
+    streamifier.createReadStream(req.file.buffer).pipe(stream);
+  });
+};
 
 uploadRouter.post(
   '/',
@@ -14,25 +74,20 @@ uploadRouter.post(
   isAdmin,
   upload.single('file'),
   async (req, res) => {
-    cloudinary.config({
-      cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-      api_key: process.env.CLOUDINARY_API_KEY,
-      api_secret: process.env.CLOUDINARY_API_SECRET,
-    });
-    const streamUpload = (req) => {
-      return new Promise((resolve, reject) => {
-        const stream = cloudinary.uploader.upload_stream((error, result) => {
-          if (result) {
-            resolve(result);
-          } else {
-            reject(error);
-          }
-        });
-        streamifier.createReadStream(req.file.buffer).pipe(stream);
-      });
-    };
-    const result = await streamUpload(req);
-    res.send(result);
+    try {
+      if (!req.file) {
+        return res.status(400).json({ message: 'No file uploaded' });
+      }
+
+      const result = await streamUpload(req);
+      res.json({ secure_url: result.secure_url }); // Ensure response matches frontend expectation
+    } catch (error) {
+      console.error('Upload error:', error);
+      res
+        .status(500)
+        .json({ message: 'Failed to upload file', error: error.message });
+    }
   }
 );
+
 export default uploadRouter;

@@ -261,7 +261,9 @@ export default function EditProductForm({ productId }: Props) {
           </FormGroup>
           <FormGroup className="mb-3" controlId="additionalImage">
             <Form.Label>Additional Images</Form.Label>
-            {images.length === 0 && <MessageBox>No image</MessageBox>}
+            {images.length === 0 && (
+              <MessageBox variant="secondary">No Additional Image</MessageBox>
+            )}
             <ListGroup variant="flush">
               {images.map((x) => (
                 <ListGroupItem key={x}>
