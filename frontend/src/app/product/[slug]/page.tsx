@@ -231,6 +231,7 @@ import Card from 'react-bootstrap/Card';
 import CardBody from 'react-bootstrap/CardBody';
 import { FaCalendarDays, FaTruckMoving } from 'react-icons/fa6';
 import ProductImages from '@/components/ProductImages'; // New client component
+import ProductReviews from '@/components/ProductReviews';
 
 interface Product {
   _id: string;
@@ -380,6 +381,9 @@ export default async function ProductPage({
               </CardBody>
             </Card>
           </Col>
+        </Row>
+        <Row>
+          <ProductReviews product={product} />
         </Row>
       </Container>
     );
