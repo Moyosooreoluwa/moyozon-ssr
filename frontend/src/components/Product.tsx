@@ -45,34 +45,37 @@ const Product = ({ product }: ProductProps) => {
       }}
     >
       <div style={{ position: 'relative', width: '100%', height: '250px' }}>
-        {/* <Image
+        {!product.images || product.images.length === 0 ? (
+          <Image
             src={product.image}
             alt={product.name}
             fill
             style={{ objectFit: 'cover', borderRadius: '0.5rem' }}
-          /> */}
-        <Carousel>
-          {allImages.map((img, index) => (
-            <CarouselItem key={index}>
-              <div
-                style={{
-                  width: '100%',
-                  height: '250px',
-                  position: 'relative',
-                }}
-              >
-                <Link href={`/product/${product.slug}`} passHref>
-                  <Image
-                    src={img}
-                    alt={`${product.name} - Image ${index + 1}`}
-                    fill
-                    style={{ objectFit: 'cover', borderRadius: '0.5rem' }}
-                  />
-                </Link>
-              </div>
-            </CarouselItem>
-          ))}
-        </Carousel>
+          />
+        ) : (
+          <Carousel>
+            {allImages.map((img, index) => (
+              <CarouselItem key={index}>
+                <div
+                  style={{
+                    width: '100%',
+                    height: '250px',
+                    position: 'relative',
+                  }}
+                >
+                  <Link href={`/product/${product.slug}`} passHref>
+                    <Image
+                      src={img}
+                      alt={`${product.name} - Image ${index + 1}`}
+                      fill
+                      style={{ objectFit: 'cover', borderRadius: '0.5rem' }}
+                    />
+                  </Link>
+                </div>
+              </CarouselItem>
+            ))}
+          </Carousel>
+        )}
       </div>
 
       <CardBody style={{ padding: 0 }} className="">

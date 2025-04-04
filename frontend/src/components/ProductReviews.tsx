@@ -126,9 +126,9 @@ export default function ProductReviews({ product }: { product: Product }) {
           Reviews
         </h2>
 
-        <Col>
+        <Col md={6} className="items-center place-items-center">
           {' '}
-          <div className="my-3">
+          <div className="my-3 w-1/2">
             {userInfo ? (
               <form onSubmit={submitHandler}>
                 <h2>Write a customer review</h2>
@@ -178,23 +178,25 @@ export default function ProductReviews({ product }: { product: Product }) {
             )}
           </div>
         </Col>
-        <Col>
+        <Col md={6} className="items-center place-items-center">
           {' '}
-          <div className="mb-3">
+          <div className="mb-3 my-3 w-1/2">
             {product.reviews?.length === 0 && (
               <MessageBox>There is no review</MessageBox>
             )}
           </div>
-          <ListGroup>
-            {product.reviews?.map((review: Review) => (
-              <ListGroupItem key={review._id}>
-                <strong>{review.name}</strong>
-                <Rating rating={review.rating} caption=" " />
-                <p>{review.createdAt.substring(0, 10)}</p>
-                <p>{review.comment}</p>
-              </ListGroupItem>
-            ))}
-          </ListGroup>
+          <div className="my-3 w-1/2">
+            <ListGroup>
+              {product.reviews?.map((review: Review) => (
+                <ListGroupItem key={review._id}>
+                  <strong>{review.name}</strong>
+                  <Rating rating={review.rating} caption=" " />
+                  <p>{review.createdAt.substring(0, 10)}</p>
+                  <p>{review.comment}</p>
+                </ListGroupItem>
+              ))}
+            </ListGroup>
+          </div>
         </Col>
       </Row>
     </>
